@@ -3,3 +3,11 @@
 build
 
 deploy
+
+.gitlab-ci.yml
+
+.gradle
+
+.docker
+
+.editorconfig
