@@ -1,0 +1,36 @@
+insert into auth_users (id, email, password, roles, user_data) values
+(
+	'95760c78-f206-4ef4-a326-688ee4b2b330',
+	'e.meesters@admin.elvis',
+	'$2a$10$ytxlNtpyVgfeR/ML7LD6ae.Ade1xXkdqK6wtx/RLu/RNhOyb6DHsi',
+	'{"ADMINISTRATOR"}',
+	'"{\"fullName\":{\"firstName\":\"Erwin\",\"lastName\":\"admin\"}}"'
+),
+(
+	'3d6a82c9-e199-46ea-9659-2b736f45e98c',
+	'w.vandongen@admin.elvis',
+	'$2a$10$KgXER1oQfOMC2SiBCReFPen71XJnBEVWsewqS.MKR5RhciG/dw.sm',
+	'{"ADMINISTRATOR"}',
+	'"{\"fullName\":{\"firstName\":\"Wim\",\"lastName\":\"admin\"}}"'
+),
+(
+	'8a42e4c4-54ca-43e9-8172-bacbb01e416b',
+	'sharif.islam@admin.elvis',
+	'$2a$10$H1RZzMFVed67nTJyvoFkJ.p/47IsdBf8YY50oex2hrROowl9.UtSO',
+	'{"ADMINISTRATOR"}',
+	'"{\"fullName\":{\"firstName\":\"Sharif\",\"lastName\":\"admin\"}}"'
+),
+(
+	'02dc11e4-e43d-4afc-9760-1a79b51f16c9',
+	's.wilson@admin.elvis',
+	'$2a$10$PdVtuuHY7cJdK6qpke/zvecSJc652wPhUKkRz0m7jDUybTRGwaB0a',
+	'{"ADMINISTRATOR"}',
+	'"{\"fullName\":{\"firstName\":\"Scott\",\"lastName\":\"admin\"}}"'
+),
+(
+	'96c76c65-db2b-4462-984e-fdbc8401d9a5',
+	'wouter.addink@admin.elvis',
+	'$2a$10$2QB.9gfHIGVJd3v17aEj6eKLB2jT6RFgAa1lm6EK3yOesRBk5FhSe',
+	'{"ADMINISTRATOR"}',
+	'"{\"fullName\":{\"firstName\":\"Wouter\",\"lastName\":\"admin\"}}"'
+) ON CONFLICT(email) DO NOTHING;

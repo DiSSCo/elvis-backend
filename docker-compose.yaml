@@ -1,0 +1,64 @@
+version: "3"
+
+services:
+
+  db:
+    image: postgres:12.1
+    container_name: elvis-postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: elvis
+      POSTGRES_PASSWORD: elvis
+      POSTGRES_DB: elvis
+
+      KEYCLOAK_DB_NAME: keycloak
+      KEYCLOAK_DB_USER: keycloak
+      KEYCLOAK_DB_PASSWORD: keycloak
+    volumes:
+      - .docker/postgres/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - .docker/postgres/fixtures.sql:/docker-entrypoint-initdb.d/02_fixtures.sql
+      - .docker/postgres/keycloak.sh:/docker-entrypoint-initdb.d/keycloak.sh
+
+  minio:
+    image: minio/minio
+    volumes:
+      - minio-data:/data
+    container_name: elvis-minio
+    ports:
+      - 9000:9000
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123456789
+    command: minio server --compat /data
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "elvis-swagger-ui"
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./resources/swagger.json:/swagger/swagger.json
+    environment:
+      SWAGGER_JSON: /swagger/swagger.json
+
+  keycloak:
+    build:
+      context: .docker/keycloak
+    container_name: "elvis-keycloak"
+    environment:
+      KEYCLOAK_USER: elvis
+      KEYCLOAK_PASSWORD: elvis
+      DB_VENDOR: postgres
+      DB_ADDR: db
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak
+      KEYCLOAK_IMPORT: /tmp/exports/elvis-realm.json
+    ports:
+      - 5050:8080
+    volumes:
+      - ./.docker/keycloak/exports:/tmp/exports
+volumes:
+  minio-data:

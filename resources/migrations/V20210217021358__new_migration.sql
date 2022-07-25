@@ -1,0 +1,1 @@
+alter table institution_facilities add instruments varchar;

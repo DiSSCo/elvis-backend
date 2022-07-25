@@ -1,0 +1,1 @@
+ALTER TABLE accounts ADD country_other_institution varchar;

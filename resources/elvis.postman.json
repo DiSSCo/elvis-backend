@@ -1,0 +1,4462 @@
+{
+  "info": {
+    "_postman_id": "f9e64897-51fc-4d15-9959-031fbccc7a97",
+    "name": "Elvis",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login as Requester",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "requester@picturae.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "Test12345",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "elvis-ui",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+              "host": [
+                "{{keycloak_host}}"
+              ],
+              "path": [
+                "auth",
+                "realms",
+                "{{keycloak_realm}}",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login as Va Coordinator",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "va_coordinator@picturae.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "Test12345",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "elvis-ui",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+              "host": [
+                "{{keycloak_host}}"
+              ],
+              "path": [
+                "auth",
+                "realms",
+                "{{keycloak_realm}}",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login as TA Coordinator",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "ta_coordinator@picturae.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "Test12345",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "elvis-ui",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+              "host": [
+                "{{keycloak_host}}"
+              ],
+              "path": [
+                "auth",
+                "realms",
+                "{{keycloak_realm}}",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login as Administrator",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "admin@picturae.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "Test12345",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "elvis-ui",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+              "host": [
+                "{{keycloak_host}}"
+              ],
+              "path": [
+                "auth",
+                "realms",
+                "{{keycloak_realm}}",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login as Institution Moderator",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "moderator@picturae.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "Test12345",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "elvis-ui",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+              "host": [
+                "{{keycloak_host}}"
+              ],
+              "path": [
+                "auth",
+                "realms",
+                "{{keycloak_realm}}",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login as TAF Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "taf_admin@picturae.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "Test12345",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "elvis-ui",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+              "host": [
+                "{{keycloak_host}}"
+              ],
+              "path": [
+                "auth",
+                "realms",
+                "{{keycloak_realm}}",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login as TA Scorer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "ta_scorer@picturae.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "Test12345",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "elvis-ui",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+              "host": [
+                "{{keycloak_host}}"
+              ],
+              "path": [
+                "auth",
+                "realms",
+                "{{keycloak_realm}}",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Support",
+      "item": [
+        {
+          "name": "Contact site administration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "message",
+                  "value": "some question",
+                  "type": "text"
+                },
+                {
+                  "key": "subject",
+                  "value": "i have a question",
+                  "type": "text"
+                },
+                {
+                  "key": "attach",
+                  "value": "",
+                  "type": "file"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{backend_host}}/contact",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "contact"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Registration",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"userId\", data.data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"firstName\":\"Valerzy\",\n\t\"lastName\":\"Liontyiev\",\n\t\"password\":\"Test12345\",\n\t\"email\":\"test@test.texst\",\n\t\"orcId\": \"0001-0002-0003-0006\",\n\t\"gender\": \"male\",\n\t\"birthDate\": \"2020-02-01\"\n}"
+            },
+            "url": {
+              "raw": "{{backend_host}}/registration",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "registration"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login as created user",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "test@test.texst",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "Test12345",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "elvis-ui",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+              "host": [
+                "{{keycloak_host}}"
+              ],
+              "path": [
+                "auth",
+                "realms",
+                "{{keycloak_realm}}",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\":\"Administrator\",\n  \"lastName\":\"Picturae\",\n  \"gender\":\"male\",\n  \"birthDate\":\"1975-03-09\",\n  \"orcId\":\"5555-5555-5555-5558\",\n  \"relatedInstitutionId\": \"grid.20478.39\"\n}"
+            },
+            "url": {
+              "raw": "{{backend_host}}/profile",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "View profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{backend_host}}/profile",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "profile"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "item": [
+        {
+          "name": "Requests",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"index\": \"requests\",\n    \"queries\": [],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/search",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "search"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Settings",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"index\": \"settings\",\n    \"queries\": [],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/search",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "search"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Facilities",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"index\": \"facilities\",\n    \"queries\": [\n        {\n            \"type\": \"and\",\n            \"criteria\": [\n                {\n                    \"field\": \"instruments\",\n                    \"type\": \"like\",\n                    \"value\": \"qwerty\"\n                }\n            ]\n        }\n    ],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/search",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "search"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Users",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"index\": \"users\",\n    \"queries\": [\n        {\n            \"type\": \"and\",\n            \"criteria\": [\n                {\n                    \"field\": \"group_list\",\n                    \"type\": \"contains\",\n                    \"value\": [\"requester\"]\n                }\n            ]\n        }\n    ],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/search",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "search"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Va Calls",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"index\": \"calls\",\n    \"queries\": [\n        {\n          \"type\": \"and\",\n          \"criteria\": [\n            {\n              \"field\": \"deleted_at\",\n              \"type\": \"eq\",\n              \"value\": null\n            }\n          ]\n        },\n        {\n          \"type\": \"and\",\n          \"criteria\": [\n            {\n              \"field\": \"call_type\",\n              \"type\": \"eq\",\n              \"value\": \"VA\"\n            }\n          ]\n        }\n    ],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/search",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "search"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Ta Calls",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"index\": \"calls\",\n    \"queries\": [\n        {\n          \"type\": \"and\",\n          \"criteria\": [\n            {\n              \"field\": \"deleted_at\",\n              \"type\": \"eq\",\n              \"value\": null\n            }\n          ]\n        },\n        {\n          \"type\": \"and\",\n          \"criteria\": [\n            {\n              \"field\": \"call_type\",\n              \"type\": \"eq\",\n              \"value\": \"TA\"\n            }\n          ]\n        }\n    ],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/search",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "search"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Institutions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"index\": \"institutions\",\n    \"queries\": [],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/search",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "search"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create VA request copy",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"callRequestId\", data.data.id);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"callId\": \"{{callId}}\"\n}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/call-requests",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "call-requests"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add institution to TA request",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n   \"institutionId\": \"{{institutionId}}\"\n}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/call-requests/{{callRequestId}}/add-institution",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "call-requests",
+                "{{callRequestId}}",
+                "add-institution"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add institution to VA request copy",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n   \"institutionId\": \"{{institutionId}}\"\n}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/call-requests/{{callRequestId}}/add-institution",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "call-requests",
+                "{{callRequestId}}",
+                "add-institution"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Requests (institutions forms)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"index\": \"requestsForms\",\n    \"queries\": [],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/search",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "search"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Calls",
+      "item": [
+        {
+          "name": "TA",
+          "item": [
+            {
+              "name": "Requests",
+              "item": [
+                {
+                  "name": "Login as Requester",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                          "var data = JSON.parse(responseBody);",
+                          "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "key": "username",
+                          "value": "requester@picturae.com",
+                          "type": "text"
+                        },
+                        {
+                          "key": "password",
+                          "value": "Test12345",
+                          "type": "text"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password",
+                          "type": "text"
+                        },
+                        {
+                          "key": "client_id",
+                          "value": "elvis-ui",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+                      "host": [
+                        "{{keycloak_host}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "realms",
+                        "{{keycloak_realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "token"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Login as TA Coordinator",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                          "var data = JSON.parse(responseBody);",
+                          "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "key": "username",
+                          "value": "ta_coordinator@picturae.com",
+                          "type": "text"
+                        },
+                        {
+                          "key": "password",
+                          "value": "Test12345",
+                          "type": "text"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password",
+                          "type": "text"
+                        },
+                        {
+                          "key": "client_id",
+                          "value": "elvis-ui",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+                      "host": [
+                        "{{keycloak_host}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "realms",
+                        "{{keycloak_realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "token"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Create TA request",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                          "var data = JSON.parse(responseBody);",
+                          "postman.setEnvironmentVariable(\"callRequestId\", data.data.id);"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"callId\": \"{{callId}}\"\n}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "View TA request details",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"fieldId\": \"subject\",\n    \"value\": {\n    \t\"type\": \"string\",\n    \t\"value\": \"some title\"\n    }\n}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Set TA request field value",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"fieldId\": \"subject\",\n    \"value\": {\n    \t\"type\": \"string\",\n    \t\"value\": \"some title\"\n    }\n}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/set-field",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "set-field"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Add institution to TA request",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n   \"institutionId\": \"{{institutionId}}\"\n}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/add-institution",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "add-institution"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "TA request comments",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n   \"institutionId\": \"{{institutionId}}\"\n}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/comments",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "comments"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Add TA request comment",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n   \"body\": \"some new comment\"\n}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/comments",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "comments"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Submit TA request",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/submit",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "submit"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Aprove TA request",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/coordinator/approve",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "coordinator",
+                        "approve"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Undo aproving TA request",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/coordinator/undo-approve",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "coordinator",
+                        "undo-approve"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Withdraw TA request",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/withdraw",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "withdraw"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Scoring",
+              "item": [
+                {
+                  "name": "Login as TA Scorer",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                          "var data = JSON.parse(responseBody);",
+                          "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "key": "username",
+                          "value": "ta_scorer@picturae.com",
+                          "type": "text"
+                        },
+                        {
+                          "key": "password",
+                          "value": "Test12345",
+                          "type": "text"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password",
+                          "type": "text"
+                        },
+                        {
+                          "key": "client_id",
+                          "value": "elvis-ui",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+                      "host": [
+                        "{{keycloak_host}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "realms",
+                        "{{keycloak_realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "token"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Create scorer form",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          "var data = JSON.parse(responseBody);",
+                          "postman.setEnvironmentVariable(\"scoringFormId\", data.data.id);"
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/scorer/create",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "scorer",
+                        "create"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "View scorer form",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          ""
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/scorer/{{scoringFormId}}",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "scorer",
+                        "{{scoringFormId}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Delete scorer form",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          ""
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/scorer/{{scoringFormId}}/score",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "scorer",
+                        "{{scoringFormId}}",
+                        "score"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Score",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "exec": [
+                          ""
+                        ],
+                        "type": "text/javascript"
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"fieldId\": \"comments\",\n    \"value\": {\n    \t\"type\": \"string\",\n    \t\"value\": \"10\"\n    }\n}"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/scorer/{{scoringFormId}}/score",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "scorer",
+                        "{{scoringFormId}}",
+                        "score"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Ta Calls",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"index\": \"calls\",\n    \"queries\": [\n        {\n          \"type\": \"and\",\n          \"criteria\": [\n            {\n              \"field\": \"deleted_at\",\n              \"type\": \"eq\",\n              \"value\": null\n            }\n          ]\n        },\n        {\n          \"type\": \"and\",\n          \"criteria\": [\n            {\n              \"field\": \"call_type\",\n              \"type\": \"eq\",\n              \"value\": \"TA\"\n            }\n          ]\n        }\n    ],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/search",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "search"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create TaCall",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"callId\", data.data.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"type\": \"TA\",\n    \"name\": \"New call title\",\n    \"description\": \"Some call description\",\n    \"additionalInfo\": \"Addtinional call details\",\n    \"startDate\": \"2020-01-01T00:00:00\",\n    \"endDate\": \"2030-01-01T00:00:00\"\n}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/calls",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "calls"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "VA",
+          "item": [
+            {
+              "name": "Requests",
+              "item": [
+                {
+                  "name": "Login as Requester",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                          "var data = JSON.parse(responseBody);",
+                          "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/x-www-form-urlencoded"
+                      }
+                    ],
+                    "body": {
+                      "mode": "urlencoded",
+                      "urlencoded": [
+                        {
+                          "key": "username",
+                          "value": "requester@picturae.com",
+                          "type": "text"
+                        },
+                        {
+                          "key": "password",
+                          "value": "Test12345",
+                          "type": "text"
+                        },
+                        {
+                          "key": "grant_type",
+                          "value": "password",
+                          "type": "text"
+                        },
+                        {
+                          "key": "client_id",
+                          "value": "elvis-ui",
+                          "type": "text"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+                      "host": [
+                        "{{keycloak_host}}"
+                      ],
+                      "path": [
+                        "auth",
+                        "realms",
+                        "{{keycloak_realm}}",
+                        "protocol",
+                        "openid-connect",
+                        "token"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Create VA request",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                          "var data = JSON.parse(responseBody);",
+                          "postman.setEnvironmentVariable(\"callRequestId\", data.data.id);"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"callId\": \"{{callId}}\"\n}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "View VA request",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Approve VA request",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                          "var data = JSON.parse(responseBody);",
+                          "postman.setEnvironmentVariable(\"callRequestId\", data.data.id);"
+                        ]
+                      }
+                    }
+                  ],
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"callId\": \"{{callId}}\"\n}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/coordinator/approve",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "coordinator",
+                        "approve"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Set VA request field value",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"fieldId\": \"data_storage[1].details\",\n    \"value\": {\n    \t\"type\": \"string\",\n    \t\"value\": \"qwerty\"\n    }\n}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/set-field",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "set-field"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Add institution to VA request",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n   \"institutionId\": \"{{institutionId}}\"\n}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/add-institution",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "add-institution"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Upload attachmnet to VA request",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "disabled": true
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "formdata",
+                      "formdata": [
+                        {
+                          "key": "xdv",
+                          "value": "",
+                          "type": "file"
+                        }
+                      ]
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/attachments/{{institutionId}}",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "attachments",
+                        "{{institutionId}}"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Withdraw VA request",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/admin/call-requests/{{callRequestId}}/withdraw",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "admin",
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "withdraw"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "VA request comments",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n   \"institutionId\": \"{{institutionId}}\"\n}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/comments",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "comments"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Add VA request comment",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n   \"body\": \"some new comment\"\n}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/comments",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "comments"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Submit VA request",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/submit",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "submit"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Aprove VA request",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/coordinator/approve",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "coordinator",
+                        "approve"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Undo aproving VA request",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/coordinator/undo-approve",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "coordinator",
+                        "undo-approve"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Withdraw VA request",
+                  "request": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Authorization",
+                        "value": "Bearer {{authToken}}"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{}\n"
+                    },
+                    "url": {
+                      "raw": "{{backend_host}}/call-requests/{{callRequestId}}/withdraw",
+                      "host": [
+                        "{{backend_host}}"
+                      ],
+                      "path": [
+                        "call-requests",
+                        "{{callRequestId}}",
+                        "withdraw"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Va Calls",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"index\": \"calls\",\n    \"queries\": [\n        {\n          \"type\": \"and\",\n          \"criteria\": [\n            {\n              \"field\": \"deleted_at\",\n              \"type\": \"eq\",\n              \"value\": null\n            }\n          ]\n        },\n        {\n          \"type\": \"and\",\n          \"criteria\": [\n            {\n              \"field\": \"call_type\",\n              \"type\": \"eq\",\n              \"value\": \"va\"\n            }\n          ]\n        }\n    ],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/search",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "search"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create VaCall",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"callId\", data.data.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"type\": \"VA\",\n    \"name\": \"New call title\",\n    \"description\": \"Some call description\",\n    \"additionalInfo\": \"Addtinional call details\",\n    \"startDate\": \"2020-01-01T00:00:00\",\n    \"endDate\": \"2030-01-01T00:00:00\"\n}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/calls",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "calls"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update VaCall",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"callId\", data.data.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"New call title (changed)\",\n    \"description\": \"Some call description (changed)\",\n    \"additionalInfo\": \"Addtinional call details (changed)\",\n    \"startDate\": \"2020-01-01T00:00:00\",\n    \"endDate\": \"2050-01-01T00:00:00\"\n}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/calls/{{callId}}/update",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "calls",
+                    "{{callId}}",
+                    "update"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Login as administrator",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "admin@picturae.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "Test12345",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "elvis-ui",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+              "host": [
+                "{{keycloak_host}}"
+              ],
+              "path": [
+                "auth",
+                "realms",
+                "{{keycloak_realm}}",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Institutions",
+      "item": [
+        {
+          "name": "Facilities",
+          "item": [
+            {
+              "name": "Login as moderator ",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "username",
+                      "value": "moderator@picturae.com",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Test12345",
+                      "type": "text"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password",
+                      "type": "text"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "elvis-ui",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+                  "host": [
+                    "{{keycloak_host}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "realms",
+                    "{{keycloak_realm}}",
+                    "protocol",
+                    "openid-connect",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Search facility",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"index\": \"facilities\",\n    \"queries\": [\n        {\n            \"type\": \"and\",\n            \"criteria\": [\n                {\n                    \"field\": \"deleted_at\",\n                    \"type\": \"eq\",\n                    \"value\": null\n                }\n            ]\n        },\n        {\n            \"type\": \"and\",\n            \"criteria\": [\n                {\n                    \"field\": \"title\",\n                    \"type\": \"like\",\n                    \"value\": \"some title\"\n                }\n            ]\n        }\n    ],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/search",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "search"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Create facility",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"facilityId\", data.data.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/facilities",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "facilities"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "View facility",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/facilities/{{facilityId}}",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "facilities",
+                    "{{facilityId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Delete facility",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"facilityId\", null);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/facilities/{{facilityId}}/delete",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "facilities",
+                    "{{facilityId}}",
+                    "delete"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Set facility title",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"fieldId\":\"nameEng\",\n    \"fieldValue\":  {\n        \"type\":\"string\",\n        \"value\":\"Some title\"\n        \n    }\n    \n}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/facilities/{{facilityId}}/setFormValue",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "facilities",
+                    "{{facilityId}}",
+                    "setFormValue"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add instrument",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"fieldId\":\"instruments[0].name\",\n    \"fieldValue\": {\n        \"type\":\"string\",\n        \"value\":\"some instrument\"\n    }\n}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/facilities/{{facilityId}}/setFormValue",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "facilities",
+                    "{{facilityId}}",
+                    "setFormValue"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Remove instruments group",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"groupId\": \"instruments[0]\"\n}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/facilities/{{facilityId}}/delete-group",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "facilities",
+                    "{{facilityId}}",
+                    "delete-group"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add facility image",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"facilityImageId\", data.data[0]);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "disabled": true
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "passport",
+                      "type": "file",
+                      "src": "abube.png",
+                      "disabled": true
+                    },
+                    {
+                      "key": "ind",
+                      "type": "file",
+                      "src": "Screenshot 2020-11-18 at 11.30.45.png"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/facilities/{{facilityId}}/images",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "facilities",
+                    "{{facilityId}}",
+                    "images"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Obtain facility omage",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/facilities/{{facilityId}}/images/{{facilityImageId}}",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "facilities",
+                    "{{facilityId}}",
+                    "images",
+                    "{{facilityImageId}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Members",
+          "item": [
+            {
+              "name": "Login as moderator",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "username",
+                      "value": "moderator@picturae.com",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Test12345",
+                      "type": "text"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password",
+                      "type": "text"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "elvis-ui",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+                  "host": [
+                    "{{keycloak_host}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "realms",
+                    "{{keycloak_realm}}",
+                    "protocol",
+                    "openid-connect",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/people",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "people"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Invite",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": \"{{userId}}\"\n}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/people/invite",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "people",
+                    "invite"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Remove",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": \"{{userId}}\"\n}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/people/remove",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "people",
+                    "remove"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Coordinators",
+          "item": [
+            {
+              "name": "Login as Institution Moderator",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "username",
+                      "value": "moderator@picturae.com",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Test12345",
+                      "type": "text"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password",
+                      "type": "text"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "elvis-ui",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+                  "host": [
+                    "{{keycloak_host}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "realms",
+                    "{{keycloak_realm}}",
+                    "protocol",
+                    "openid-connect",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[VA Coordinator] List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/va_coordinator",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "va_coordinator"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[VA Coordinator] Add",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/va_coordinator/add/{{userId}}",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "va_coordinator",
+                    "add",
+                    "{{userId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[VA Coordinator] Remove",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/va_coordinator/remove/{{userId}}",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "va_coordinator",
+                    "remove",
+                    "{{userId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[TA Coordinator] List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/ta_coordinator",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "ta_coordinator"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[TA Coordinator] Add",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/ta_coordinator/add/{{userId}}",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "ta_coordinator",
+                    "add",
+                    "{{userId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[TA Coordinator] Remove",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/ta_coordinator/remove/{{userId}}",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "ta_coordinator",
+                    "remove",
+                    "{{userId}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Moderators",
+          "item": [
+            {
+              "name": "Login as Institution Moderator",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "username",
+                      "value": "moderator@picturae.com",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Test12345",
+                      "type": "text"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password",
+                      "type": "text"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "elvis-ui",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+                  "host": [
+                    "{{keycloak_host}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "realms",
+                    "{{keycloak_realm}}",
+                    "protocol",
+                    "openid-connect",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[Institution Moderator] List",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/institution_moderator",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "institution_moderator"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[Institution Moderator] Add",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/institution_moderator/add/{{userId}}",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "institution_moderator",
+                    "add",
+                    "{{userId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "[Institution Moderator] Remove",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/institution_moderator/remove/{{userId}}",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "institution_moderator",
+                    "remove",
+                    "{{userId}}"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "View institution",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{backend_host}}/institutions/{{institutionId}}",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "institutions",
+                "{{institutionId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search institutions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"index\": \"institutions\",\n    \"queries\": [],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/search",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "search"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Settings",
+          "item": [
+            {
+              "name": "List",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"index\": \"settings\",\n    \"queries\": [],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/search",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "search"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Obtain",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{backend_host}}/admin/settings/main_page_text",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "settings",
+                    "main_page_text"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "View copy",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{backend_host}}/institutions/{{institutionId}}/facilities/{{facilityId}}",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "institutions",
+                    "{{institutionId}}",
+                    "facilities",
+                    "{{facilityId}}"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "List",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"index\": \"institutions\",\n    \"queries\": [],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/search",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "search"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Institutions copy",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"index\": \"institutions\",\n    \"queries\": [],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/search",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "search"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Institutions copy",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"index\": \"institutions\",\n    \"queries\": [],\n    \"perPage\": 100,\n    \"page\": 1\n}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/search",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "search"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Login as moderator copy",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "username",
+                      "value": "moderator@picturae.com",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Test12345",
+                      "type": "text"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password",
+                      "type": "text"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "elvis-ui",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+                  "host": [
+                    "{{keycloak_host}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "realms",
+                    "{{keycloak_realm}}",
+                    "protocol",
+                    "openid-connect",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Login as moderator copy",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "username",
+                      "value": "moderator@picturae.com",
+                      "type": "text"
+                    },
+                    {
+                      "key": "password",
+                      "value": "Test12345",
+                      "type": "text"
+                    },
+                    {
+                      "key": "grant_type",
+                      "value": "password",
+                      "type": "text"
+                    },
+                    {
+                      "key": "client_id",
+                      "value": "elvis-ui",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+                  "host": [
+                    "{{keycloak_host}}"
+                  ],
+                  "path": [
+                    "auth",
+                    "realms",
+                    "{{keycloak_realm}}",
+                    "protocol",
+                    "openid-connect",
+                    "token"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"key\": \"someSettingsKey\",\n    \"value\": \"someValue\",\n    \"type\": \"string\"\n}\n"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/admin/settings",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "settings"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Users",
+          "item": [
+            {
+              "name": "Search ",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{backend_host}}/users",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "users"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "var data = JSON.parse(responseBody);",
+                      "postman.setEnvironmentVariable(\"userId\", data.data.id);"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"email\": \"created@picturase.com\",\n\t\"fullName\": {\n\t\t\"firstName\": \"Created\",\n\t\t\"lastName\": \"Picturae\"\n\t},\n\t\"attributes\": {\n\t\t\"orcId\": \"1001-1001-1001-1001\",\n\t\t\"institutionId\": null\n\t},\n\t\"password\": \"Test12345\",\n\t\"groups\": [\"requester\"],\n\t\"sendEmail\": true\n}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/users/add",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "users",
+                    "add"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Ban",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"reason\": \"retard\"\n}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/users/{{userId}}/ban",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "users",
+                    "{{userId}}",
+                    "ban"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Promote",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"group\": \"administrator\"\n}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/users/{{userId}}/promote",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "users",
+                    "{{userId}}",
+                    "promote"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Demote",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"group\": \"administrator\"\n}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/users/{{userId}}/demote",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "users",
+                    "{{userId}}",
+                    "demote"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Unban",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{authToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+                "url": {
+                  "raw": "{{backend_host}}/users/{{userId}}/unban",
+                  "host": [
+                    "{{backend_host}}"
+                  ],
+                  "path": [
+                    "users",
+                    "{{userId}}",
+                    "unban"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Auth",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "admin@picturae.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "Test12345",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "elvis-ui",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+              "host": [
+                "{{keycloak_host}}"
+              ],
+              "path": [
+                "auth",
+                "realms",
+                "{{keycloak_realm}}",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Country",
+      "item": [
+        {
+          "name": "Login as administrator",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "var data = JSON.parse(responseBody);",
+                  "postman.setEnvironmentVariable(\"authToken\", data.access_token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "admin@picturae.com",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "Test12345",
+                  "type": "text"
+                },
+                {
+                  "key": "grant_type",
+                  "value": "password",
+                  "type": "text"
+                },
+                {
+                  "key": "client_id",
+                  "value": "elvis-ui",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{keycloak_host}}/auth/realms/{{keycloak_realm}}/protocol/openid-connect/token",
+              "host": [
+                "{{keycloak_host}}"
+              ],
+              "path": [
+                "auth",
+                "realms",
+                "{{keycloak_realm}}",
+                "protocol",
+                "openid-connect",
+                "token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[TAF Admin] List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{backend_host}}/countries/gb/taf_admin",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "countries",
+                "gb",
+                "taf_admin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[TAF Admin] Add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/countries/gb/taf_admin/add/{{userId}}",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "countries",
+                "gb",
+                "taf_admin",
+                "add",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[TAF Admin] Remove",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/countries/gb/taf_admin/remove/{{userId}}",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "countries",
+                "gb",
+                "taf_admin",
+                "remove",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[TA Scorer] List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{backend_host}}/countries/gb/ta_scorer",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "countries",
+                "gb",
+                "ta_scorer"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[TA Scorer] Add",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/countries/gb/ta_scorer/add/{{userId}}",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "countries",
+                "gb",
+                "ta_scorer",
+                "add",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "[TA Scorer] Remove",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{authToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}\n"
+            },
+            "url": {
+              "raw": "{{backend_host}}/countries/gb/ta_scorer/remove/{{userId}}",
+              "host": [
+                "{{backend_host}}"
+              ],
+              "path": [
+                "countries",
+                "gb",
+                "ta_scorer",
+                "remove",
+                "{{userId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+
+    <style>
+        .generalTable {
+            border: 0;
+            border-spacing: 10px;
+            font-family: "Open Sans", Arial, Helvetica, sans-serif;
+            margin: 1cm;
+            width: 17cm;
+        }
+
+        .subTable {
+            border-spacing: 10px;
+            border: 1px solid black;
+            width: 100%;
+        }
+
+        .rowContent {
+            padding: 6px 0;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .topRow {
+            vertical-align: top;
+            padding: 0 10px;
+        }
+
+        .requestType {
+            padding: 3px 15px 6px;
+            border: 1px solid #000;
+        }
+
+        h1 {
+            color: #000;
+            font-size: 24px;
+            margin: 6px 0;
+        }
+
+        h3 {
+            margin: 4px 0;
+        }
+
+        p {
+            margin: 4px 0
+        }
+    </style>
+</head>
+<body>
+<table class="generalTable">
+    <tr>
+        <td style="padding: 0; vertical-align: top; border:1px solid; background-color:#fff">
+            <div class="requestType">
+                <h1>{request.type}</h1>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="topRow">
+            <div class="rowContent">
+                <h3>Request subject</h3>
+                <p>{request.subject}</p>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td class="topRow">
+            <div class="rowContent">
+                <h3>Abstract</h3>
+                <p>{request.abstract}</p>
+            </div>
+        </td>
+    </tr>
+    {request.institution_forms}
+    <tr>
+        <td class="topRow">
+            <hr/>
+        </td>
+    </tr>
+    <tr>
+        {request.impact}
+    </tr>
+</table>
+</body>
+</html>

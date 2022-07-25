@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  backend:
+    image: gitlab.picturae.com:5050/elvis/elvis-backend
+    build: .
+    networks:
+      elvis: ~
+    ports:
+      - 80:8080
+    environment:
+      DATABASE_HOST: db
+      DATABASE_NAME: elvis
+      DATABASE_USERNAME: elvis
+      DATABASE_PASSWORD: elvis
+
+  db:
+    networks:
+      elvis: ~
+    ports: []
+
+networks:
+  elvis:
+    external:
+      name: elvis

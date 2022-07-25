@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX IF NOT EXISTS scoring_form_i ON scoring_form (request_id, scorer_id);

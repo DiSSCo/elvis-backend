@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" />
+
+    <style>
+    .generalTable {
+      border: 0;
+      border-spacing: 10px;
+      font-family: "Open Sans", Arial, Helvetica, sans-serif;
+      margin: 1cm;
+      width: 17cm;
+    }
+
+    .subTable {
+      border-spacing: 10px;
+      border: 1px solid black;
+      width: 100%;
+    }
+
+    .rowContent {
+      padding: 6px 0;
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .topRow {
+      vertical-align: top;
+      padding: 0 10px;
+    }
+
+    .requestType {
+      padding: 3px 15px 6px;
+      border: 1px solid #000;
+    }
+
+    h1 {
+      color: #000;
+      font-size: 24px;
+      margin: 6px 0;
+    }
+
+    h3 {
+      margin: 4px 0;
+    }
+
+    p {
+      margin: 4px 0
+    }
+  </style>
+</head>
+
+<body>
+<table class="generalTable">
+    <tr>
+        <td style="padding: 0; vertical-align: top; border:1px solid; background-color:#fff">
+            <div class="requestType">
+                <h1>{request.type}</h1>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <h3>Request title</h3>
+            <p>{request.subject}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <ol>
+                <!-- repeat for all institutions -->
+                {request.institutionName}
+                <!-- /repeat for all institutions -->
+            </ol>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <hr />
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <strong>Request details</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> &#8226; Proposed start date: </td>
+        <td> {request.start_date} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Proposed end date: </td>
+        <td> {request.end_date} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Proposed length of visit: </td>
+        <td> {request.visit_length} </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <hr />
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <strong>Research team details</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> &#8226; User group leader: </td>
+        <td> {request.team_leader}</td>
+    </tr>
+    <tr>
+        <td>&#8226; Other researchers: </td>
+        <td> {request.other_researchers} </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <hr />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <strong>Project information</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> &#8226; Project objectives </td>
+        <td> {request.project_objectives} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Project discipline: </td>
+        <td> {request.project_discipline} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Project specific discipline: </td>
+        <td> {request.project_specific_discipline} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Public project summary: </td>
+        <td> {request.project_summary} </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <hr />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <strong>Other institutions</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> &#8226; Access to other institutions: </td>
+        <td> {request.other_institutions} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Explanation: </td>
+        <td> {request.why_other_institutions} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Visit to other institutions: </td>
+        <td> {request.visit_before} </td>
+    </tr>
+    <tr>
+        <td> &#8226; If yes, which one: </td>
+        <td> {request.visit_before_institution} </td>
+    </tr>
+    <tr>
+        <td> &#8226; If yes, explain: </td>
+        <td> {request.visit_before_request_number}</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <hr />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <strong>Project methodology</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> &#8226; Scientific context/methods: </td>
+        <td> {request.context_methods} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Workplan: </td>
+        <td> {request.work_plan} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Justification for the request: </td>
+        <td> {request.justification_for_request} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Influence on your research: </td>
+        <td> {request.advance_research} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Outputs and dissemination: </td>
+        <td> {request.expected_output} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Training requirements: </td>
+        <td> {request.training_requirements} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Training already received: </td>
+        <td> {request.training_received} </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <hr />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <strong colspan="2">Previous visits</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> &#8226; Is this your first application: </td>
+        <td> {request.first_application} </td>
+    </tr>
+    <tr>
+        <td> &#8226; If no, explain: </td>
+        <td> {request.previous_project_acronyms}</td>
+    </tr>
+    <tr>
+        <td> &#8226; Is this your first visit here: </td>
+        <td> {request.first_visit_to_selected} </td>
+    </tr>
+    <tr>
+        <td> &#8226; If no, explain: </td>
+        <td> {request.previous_visit_details}</td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <hr />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <strong colspan="2">Resource needs</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> &#8226; Availability of resources:</td>
+        <td> {request.facilities_home} </td>
+    </tr>
+    <tr>
+        <td>&#8226; If yes, explain: </td>
+        <td> {request.access_explanation} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Access to collections: </td>
+        <td> {request.days_in_selected} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Specify which collections:</td>
+        <td> {request.collection} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Access to libraries: </td>
+        <td> {request.libraries_in_selected}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <strong colspan="2">Supporter information</strong>
+        </td>
+    </tr>
+    <tr>
+        <td> &#8226; Supporter name:</td>
+        <td> {request.sup_name} </td>
+    </tr>
+    <tr>
+        <td>&#8226; Institution: </td>
+        <td> {request.sup_institution} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Position: </td>
+        <td> {request.sup_position} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Email address:</td>
+        <td> {request.sup_email} </td>
+    </tr>
+    <tr>
+        <td> &#8226; Phone number: </td>
+        <td> {request.sup_phone}
+        </td>
+    </tr>
+    <tr>
+        <td> &#8226; Supporting statement: </td>
+        <td> {request.sup_statement}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <strong colspan="2">Institution Services</strong>
+        </td>
+    </tr>
+    <tr>
+        <td>    {request.institutionServices} </td>
+    </tr>
+</table>
+</body>
+
+</html>

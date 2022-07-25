@@ -1,0 +1,65 @@
+<tr>
+    <td class="topRow">
+        <div class="rowContent">
+            <h2 style="margin:4px 0">{request.institution_form.index}. {request.institution_form.title}</h2>
+            <hr/>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td class="topRow">
+        <div class="rowContent">
+            <h3>Collection(s) involved</h3>
+        </div>
+        {request.institution_form.collections}
+    </td>
+</tr>
+<tr>
+    <td class="topRow">
+        <div class="rowContent">
+            <h3>Further details</h3>
+            <p>{request.institution_form.collections.further_details}</p>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td class="topRow">
+        <div class="rowContent">
+            <h3>Facilities and workflow</h3>
+        </div>
+        <!-- A collection -->
+        {request.institution_form.facilities}
+    </td>
+</tr>
+<tr>
+    <td class="topRow">
+        <div class="rowContent">
+            <h3>Data and/or metadata fields and formats proposed as outputs</h3>
+            <p> {request.institution_form.facilities_metadata}</p>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td class="topRow">
+        <div class="rowContent">
+            <h3>Data storage and release</h3>
+        </div>
+        {request.institution_form.data_storage}
+    </td>
+</tr>
+<tr>
+    <td class="topRow">
+        <div class="rowContent">
+            <h3>License type</h3>
+            <p>{request.institution_form.license}</p>
+        </div>
+    </td>
+</tr>
+<tr>
+    <td class="topRow">
+        <div class="rowContent">
+            <h3>Proposed timeline for data release</h3>
+            <p>{request.institution_form.timeline}</p>
+        </div>
+    </td>
+</tr>

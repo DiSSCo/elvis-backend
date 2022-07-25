@@ -1,0 +1,1 @@
+ALTER TABLE accounts rename COLUMN permission_list TO roles_list;

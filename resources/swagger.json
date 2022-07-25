@@ -1,0 +1,2327 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "ELViS: the unified European Loans and Visits System",
+    "version": "1.0.0",
+    "title": "ELViS",
+    "contact": {
+      "email": "apiteam@elvis.io"
+    }
+  },
+  "host": "localhost:8080",
+  "tags": [
+    {
+      "name": "elvis",
+      "description": "European Loans and Visits System",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://localhost:8080"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/registration": {
+      "post": {
+        "tags": [
+          "Requesters"
+        ],
+        "summary": "Register a new researcher",
+        "description": "",
+        "operationId": "RegistrationRequest",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Requester",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RequesterRegistrationRequest"
+            },
+            "description": "The registration json"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "Requester with specific email already exists",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/auth/realms/elvis/protocol/openid-connect/token": {
+      "post": {
+        "tags": [
+          "Login"
+        ],
+        "summary": "Logs user into the system",
+        "operationId": "AuthenticateCredentials",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Login User",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/RequesterLoginRequest"
+            },
+            "description": "The login json"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid email/password supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/requesters": {
+      "get": {
+        "tags": [
+          "Requesters"
+        ],
+        "summary": "Get all Requesters",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of requesters",
+            "schema": {
+              "$ref": "#/definitions/RequestersListResponse"
+            }
+          }
+        }
+      }
+    },
+    "/password-recovery": {
+      "post": {
+        "tags": [
+          "Requesters"
+        ],
+        "summary": "Request password recovery",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/PasswordRecovery"
+            },
+            "description": "The password recovery email"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid email supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/recovery/requester/?token={token}": {
+      "post": {
+        "tags": [
+          "Requesters"
+        ],
+        "summary": "Change password request get toke",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "newPassword",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/NewPasswordForRecovery"
+            },
+            "description": "The password recovery email"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "Failed operation",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/institutions/{institutionId}": {
+      "get": {
+        "tags": [
+          "Institutions"
+        ],
+        "summary": "Get institution details",
+        "parameters": [
+          {
+            "name": "institutionId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/Institution"
+            }
+          }
+        }
+      }
+    },
+    "/institutions": {
+      "post": {
+        "tags": [
+          "Institutions"
+        ],
+        "summary": "Add a new institution",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "AddInstitutionRequest",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/AddInstitutionRequest"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Institute with specific GRID already exists",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/institutions/{institutionId}/moderator": {
+      "get": {
+        "parameters": [
+          {
+            "name": "institutionId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "type": "string",
+            "required": false
+          }
+        ],
+        "tags": [
+          "Institutions"
+        ],
+        "summary": "Get institution moderators collection",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "total": {
+                  "type": "integer"
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/InstitutionModerator"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/institutions/{institutionId}/moderator/invite": {
+      "post": {
+        "tags": [
+          "Institutions"
+        ],
+        "summary": "Invite moderator",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "InviteModeratorRequest",
+            "schema": {
+              "type": "object",
+              "required": [
+                "email"
+              ],
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "format": "email"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/institutions/moderators/invitation/finalize": {
+      "post": {
+        "tags": [
+          "Institutions"
+        ],
+        "summary": "Finalize moderator invitation",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "FinalizeModeratorInvitationRequest",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/FinalizeModeratorInvitation"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/calls": {
+      "get": {
+        "tags": [
+          "Calls"
+        ],
+        "summary": "List all calls",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "total": {
+                  "type": "integer"
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/CallObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search": {
+      "post": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "General search form",
+        "operationId": "",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Search form",
+            "schema": {
+              "type": "object",
+              "$ref": "#/definitions/SearchForm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/call-requests": {
+      "post": {
+        "tags": [
+          "Call Requests"
+        ],
+        "summary": "Create a new Call Request",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "CreateCallRequest",
+            "schema": {
+              "type": "object",
+              "required": [
+                "callId"
+              ],
+              "properties": {
+                "callId": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Call is closed",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Call is closed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/set-field": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "Call Requests"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "SetField",
+            "description": "Possible field IDs\n\n* subject -- Request Subject\n* abstract -- Abstract\n* people_involved -- People involved\n* collections[0]\n* * name\n* * specimens_amount -- Amount of specimen\n* * preservation_type -- Preservation type\n* further_details\n* metadata -- Data and/or metadata fields and formats\n* facilities[0]\n* * titles -- Facilities required\n* * workflow -- Proposed workflow\n* cost[0]\n* * documents -- Cost calculation (document)\n* data_storage[0]\n* * platform_name -- Name of a platform\n* * details -- Further details\n* * cms -- Collection management system used\n* * formats\n* * * csv\n* * * jpeg\n* * * png\n* * * tiff\n* * * txt\n* * * xlxs\n* * * zip\n* * other_format\n* * info -- Information on storage type\n* * additional_info -- Additional Info\n* license -- possible values only cc0 and ccby\n* license_timeline -- Proposed timeline for data release\n* impact_1 -- What field(s) research or problem...\n* impact_2\n* impact_3\n* impact_4\n* impact_5 -- How might you communicate with potential...\n",
+            "schema": {
+              "type": "object",
+              "required": [
+                "fieldId"
+              ],
+              "properties": {
+                "institutionId": {
+                  "type": "string"
+                },
+                "fieldId": {
+                  "type": "string",
+                  "example": "data_storage[1].details"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Invalid"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/coordinator": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "description": "get list of assigned request for VA coordinator",
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": [
+          "Call Requests"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RequestDetails"
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/coordinator/approve": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "Call Requests"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Validation failed"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/coordinator/undo-approve": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "Call Requests"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Validation failed"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/delete-group": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "Call Requests"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "DeleteGroup",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "institutionId": {
+                  "type": "string"
+                },
+                "groupId": {
+                  "type": "string",
+                  "example": "data_storage[42]"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Wrong Position"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/add-institution": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "Call Requests"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "AddInstitution",
+            "schema": {
+              "type": "object",
+              "required": [
+                "institutionId"
+              ],
+              "properties": {
+                "institutionId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Institution is already added"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/delete-institution": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "Call Requests"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "DeleteInstitution",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "institutionId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Institution already removed"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": [
+          "Call Requests"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/RequestDetails"
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/submit": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "Call Requests"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Validation failed"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/delete ": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "Call Requests"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}//close ": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "summary": "Close request",
+        "tags": [
+          "Call Requests"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/comments": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "tags": [
+          "Call Requests"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "AddComment",
+            "schema": {
+              "type": "object",
+              "required": [
+                "body"
+              ],
+              "properties": {
+                "body": {
+                  "type": "string",
+                  "format": "text"
+                },
+                "format": {
+                  "type": "string",
+                  "description": "text/html/markdown. By default - text"
+                },
+                "replyTo": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Validation failed"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/comments ": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": [
+          "Call Requests"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CallRequestCommentResponse"
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/export": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "get": {
+        "description": "download requests comments overview",
+        "produces": [
+          "application/pdf"
+        ],
+        "tags": [
+          "Call Requests"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "400": {
+            "description": "Validation failed"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/download": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "get": {
+        "description": "Download archive containing all attachments and generated pdf file (with request overview)",
+        "produces": [
+          "application/pdf"
+        ],
+        "tags": [
+          "Call Requests"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "400": {
+            "description": "Validation failed"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/comments/download": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "get": {
+        "description": "download comments overview by requestId",
+        "produces": [
+          "application/pdf"
+        ],
+        "tags": [
+          "Call Requests"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "400": {
+            "description": "Validation failed"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/attachments/{institutionId}": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "institutionId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": [
+          "Call Requests"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CallRequestAttachmentsCollectionResponse"
+            }
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/attachments/{institutionId} ": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "institutionId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "Call Requests"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "in": "formData",
+            "name": "upfile",
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/CallRequestAddedAttachmentResponse"
+            }
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/attachments/{attachmentId}/remove": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "attachmentId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "Call Requests"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/attachments/{attachmentId}/download": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "attachmentId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "get": {
+        "tags": [
+          "Call Requests"
+        ],
+        "responses": {
+          "200": {
+            "description": "Return file payload"
+          },
+          "400": {
+            "description": "File not exists"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/delete": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Delete request",
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/call-requests/{requestId}/withdraw": {
+      "parameters": [
+        {
+          "name": "requestId",
+          "in": "path",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "description": "Withdraw request",
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/calls/{callId}/update": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Update existing call",
+        "parameters": [
+          {
+            "name": "text",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CreateCall"
+            }
+          },
+          {
+            "name": "callId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Call successful Updated {call-uuid}"
+          }
+        }
+      }
+    },
+    "/calls/{callId}/delete": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "description": "Delete existing call",
+        "parameters": [
+          {
+            "name": "callId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Call successful Deleted {call-uuid}"
+          }
+        }
+      }
+    },
+    "/users/": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Get user list",
+        "description": "Get user lists",
+        "responses": {
+          "200": {
+            "description": "User list"
+          }
+        }
+      }
+    },
+    "/users/add": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Add user",
+        "description": "Add user/Not implemented yet",
+        "responses": {
+          "200": {
+            "description": "User added"
+          }
+        }
+      }
+    },
+    "/users/{userId}/ban": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "summary": "Ban user",
+        "responses": {
+          "200": {
+            "description": "Ban user by Id/Not implemented yet"
+          }
+        }
+      }
+    },
+    "/users/{userId}/unban": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "summary": "Un-ban user",
+        "responses": {
+          "200": {
+            "description": "Un-ban user by Id/Not implemented yet"
+          }
+        }
+      }
+    },
+    "/users/{userId}/add_group": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "summary": "Add group to user",
+        "responses": {
+          "200": {
+            "description": "Add group to user by Id/Not implemented yet"
+          }
+        }
+      }
+    },
+    "/users/{userId}/remove_group": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "summary": "Remove group from user",
+        "responses": {
+          "200": {
+            "description": "Remove group from user by Id/Not implemented yet"
+          }
+        }
+      }
+    },
+    "/admin/settings": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Set text",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SettingsParameter",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/SettingsParameter"
+            },
+            "description": "Settings Parameter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Text changed"
+          }
+        }
+      }
+    },
+    "/admin/settings/{optionKey}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Get Text option by key",
+        "parameters": [
+          {
+            "name": "optionKey",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Text settings data"
+          }
+        }
+      }
+    },
+    "/reporting/requests/{callId}/{type}/{group}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Get reporting option by requests",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get reporting by requests"
+          }
+        }
+      }
+    },
+    "/reporting/requesters/{callId}/{type}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Get reporting option by requesters",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get reporting by requesters"
+          }
+        }
+      }
+    },
+    "/reporting/roles/{role}": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Get reporting option by roles",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get reporting by roles"
+          }
+        }
+      }
+    },
+    "/config": {
+      "get": {
+        "tags": [
+          "General use"
+        ],
+        "summary": "Get AuthConfig",
+        "responses": {
+          "200": {
+            "description": "Auth Config",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "config": {
+                  "$ref": "#/definitions/AuthConfig"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/institutions/{institutionId}/facilities": {
+      "get": {
+        "tags": [
+          "Facilities"
+        ],
+        "summary": "List all facilities",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "total": {
+                  "type": "integer"
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/FacilityObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/institutions/{institutionId}/facilities": {
+      "post": {
+        "tags": [
+          "Institutions",
+          "Facilities"
+        ],
+        "summary": "Get facility list",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "CreateCallRequest",
+            "schema": {
+              "type": "object",
+              "required": [
+                "callId"
+              ],
+              "properties": {
+                "institutionId": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                  "id": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/institutions/{institutionId}/{facilityId}/setFormValue": {
+      "post": {
+        "tags": [
+          "Facilities"
+        ],
+        "summary": "Set facility form values",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "SetField",
+            "description": "Possible field IDs :\n\n English Name-nameEng\n Name In local Language - nameLocal\n Facility Type - facilityType\n Facility Description - facilityDescription\n Site Url - siteUrl\n Image - img\n Repeatable fields: Instruments - instruments[0].name & instruments[0].description\n ",
+            "schema": {
+              "type": "object",
+              "required": [
+                "fieldId"
+              ],
+              "properties": {
+                "institutionId": {
+                  "type": "string"
+                },
+                "facilityId": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "fieldId": {
+                  "type": "string",
+                  "example": "instruments[1].name"
+                },
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok"
+          }
+        }
+      }
+    },
+    "/institutions/{institutionId}/{facilityId}/delete": {
+      "post": {
+        "tags": [
+          "Facilities"
+        ],
+        "summary": "Delete facility",
+        "parameters": [
+          {
+            "name": "facilityId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted"
+          }
+        }
+      }
+    },
+    "/institutions/{institutionId}/{facilityId}": {
+      "get": {
+        "tags": [
+          "Facilities"
+        ],
+        "summary": "Receive facility information",
+        "operationId": "",
+        "parameters": [
+          {
+            "name": "facilityId",
+            "in": "path",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Facility List",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "total": {
+                  "type": "integer"
+                },
+                "rows": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/FacilityObject"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contact": {
+      "post": {
+        "tags": [
+          "Authenticated Users"
+        ],
+        "summary": "Contact site administration",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "contactForm",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ContactFormData"
+            },
+            "description": "Contact Form"
+          },
+          {
+            "in": "formData",
+            "name": "attach",
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/SuccessResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid email supplied",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CreateCall": {
+      "example": "{\n\t\"name\": \"WorkingCall\",\n\t\t\"description\": \"Some stuff\",\n\t\t\t\"additionalInfo\": \"More stuff\",\n\t\t\t\t\"startDate\": \"2020-01-13T17:09:42.411\",\n\t\t\t\t\t\"endDate\": \"2021-01-13T17:09:42.411\"\n}",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "additionalInfo": {
+          "type": "string"
+        },
+        "startDate": {
+          "type": "string",
+          "format": "datetime"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "datetime"
+        }
+      }
+    },
+    "SettingsText": {
+      "properties": {
+        "text": {
+          "type": "string"
+        }
+      }
+    },
+    "ContactFormData": {
+      "properties": {
+        "message": {
+          "type": "string"
+        },
+        "subject": {
+          "type": "string"
+        }
+      }
+    },
+    "SettingsParameter": {
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "CallObject": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "additionalInfo": {
+          "type": "string",
+          "description": "can contain urls that should be in clear text"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "va",
+            "ta"
+          ]
+        },
+        "startDate": {
+          "type": "string",
+          "format": "datetime"
+        },
+        "endDate": {
+          "type": "string",
+          "format": "datetime"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "available",
+            "ended"
+          ]
+        }
+      }
+    },
+    "AuthConfig": {
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "realm": {
+          "type": "string"
+        },
+        "clientId": {
+          "type": "string"
+        },
+        "clientSecret": {
+          "type": "string"
+        }
+      }
+    },
+    "FacilityObject": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "institutionId": {
+          "type": "string"
+        },
+        "moderatorId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "deleteDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "facilityFormData": {
+          "type": "string"
+        }
+      }
+    },
+    "RequestDetails": {
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "draft",
+            "submitted",
+            "approved"
+          ]
+        },
+        "fieldValues": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "fieldId": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "institutions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "institution": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "example": "taf"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "fieldValues": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "fieldId": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "RequesterRegistrationRequest": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "orcId": {
+          "type": "number",
+          "description": "Set as null if ORCiD is not specified"
+        }
+      },
+      "required": [
+        "password",
+        "email",
+        "firstName",
+        "lastName"
+      ]
+    },
+    "RequesterLoginRequest": {
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "grand_type": {
+          "type": "string",
+          "description": "should be set to 'password'"
+        },
+        "client_id": {
+          "type": "string",
+          "description": "Should be set to 'elvis-ui'"
+        }
+      },
+      "required": [
+        "password",
+        "username",
+        "grand_type",
+        "client_id"
+      ]
+    },
+    "PasswordRecovery": {
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email"
+      ]
+    },
+    "NewPasswordForRecovery": {
+      "properties": {
+        "newPassword": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "newPassword"
+      ]
+    },
+    "ErrorResponse": {
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Response code"
+        },
+        "description": {
+          "type": "string",
+          "description": "Error description"
+        }
+      }
+    },
+    "TextSettings": {
+      "example": "{\n\"field\":\"main_page_text\",\n\"text\":{\n\"text\":\"text here\"\n }\n}\n",
+      "properties": {
+        "field": {
+          "type": "string",
+          "description": "Field name"
+        },
+        "text": {
+          "type": "string",
+          "description": "type",
+          "properties": {
+            "text": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "SuccessResponse": {
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Response code"
+        },
+        "description": {
+          "type": "string",
+          "description": "Result details"
+        },
+        "data": {
+          "type": "object",
+          "description": "Response data"
+        }
+      }
+    },
+    "RequesterLoginResponse": {
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Response code"
+        },
+        "data": {
+          "$ref": "#/definitions/JwtToken"
+        }
+      }
+    },
+    "RequestersListResponse": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "orcId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "password",
+        "email"
+      ]
+    },
+    "JwtToken": {
+      "properties": {
+        "token": {
+          "type": "string",
+          "description": "JWT token"
+        }
+      }
+    },
+    "Institution": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "cetaf": {
+          "type": "string"
+        },
+        "info": {
+          "type": "object",
+          "$ref": "#/definitions/InstitutionInfo"
+        }
+      }
+    },
+    "InstitutionInfo": {
+      "properties": {
+        "address": {
+          "type": "object",
+          "$ref": "#/definitions/InstitutionAddress"
+        }
+      }
+    },
+    "InstitutionAddress": {
+      "properties": {
+        "looselyTypedAddress": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "zipCode": {
+          "type": "string"
+        }
+      }
+    },
+    "AddInstitutionRequest": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "cetaf": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "zipCode": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        }
+      }
+    },
+    "InstitutionModerator": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        }
+      }
+    },
+    "SearchForm": {
+      "properties": {
+        "index": {
+          "type": "string"
+        },
+        "queries": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/SearchQueries"
+            }
+          }
+        },
+        "orderBy": {
+          "type": "string"
+        },
+        "page": {
+          "type": "integer"
+        },
+        "perPage": {
+          "type": "integer"
+        }
+      }
+    },
+    "SearchQueries": {
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "criteria": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "object",
+              "$ref": "#/definitions/SearchCriteria"
+            }
+          }
+        }
+      }
+    },
+    "SearchCriteria": {
+      "properties": {
+        "fieldId": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "FinalizeModeratorInvitation": {
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "CallRequestCommentResponse": {
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object",
+          "$ref": "#/definitions/CallRequestCommentThread"
+        }
+      }
+    },
+    "CallRequestCommentThread": {
+      "properties": {
+        "requestId": {
+          "type": "string"
+        },
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/CallRequestComment"
+          }
+        }
+      }
+    },
+    "CallRequestComment": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "replyTo": {
+          "type": "string"
+        },
+        "payload": {
+          "type": "object",
+          "$ref": "#/definitions/CallRequestCommentPayload"
+        },
+        "author": {
+          "type": "object",
+          "$ref": "#/definitions/CallRequestCommentAuthor"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        }
+      }
+    },
+    "CallRequestCommentAuthor": {
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "fullName": {
+          "type": "string"
+        },
+        "roles": {
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CallRequestCommentPayload": {
+      "properties": {
+        "format": {
+          "type": "string"
+        },
+        "data": {
+          "format": "string"
+        }
+      }
+    },
+    "CallRequestAddedAttachmentResponse": {
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "data": {
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        }
+      }
+    },
+    "CallRequestAttachmentsCollectionResponse": {
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "data": {
+          "properties": {
+            "total": {
+              "type": "integer"
+            },
+            "rows": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CallRequestAttachment"
+              }
+            }
+          }
+        }
+      }
+    },
+    "CallRequestAttachment": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "owner": {
+          "properties": {
+            "id": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "fullName": {
+              "type": "string"
+            },
+            "roles": {
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "addedAt": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

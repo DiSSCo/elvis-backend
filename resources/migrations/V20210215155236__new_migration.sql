@@ -1,0 +1,1 @@
+ALTER TABLE requests_institution_forms RENAME COLUMN va_coordinator_id TO coordinator_id;

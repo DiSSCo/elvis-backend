@@ -1,0 +1,1 @@
+UPDATE institutions SET country_code = 'CZ' WHERE id = 'grid.425401.6';

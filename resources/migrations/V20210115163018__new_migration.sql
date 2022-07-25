@@ -1,0 +1,1 @@
+UPDATE accounts SET gender = 'other' WHERE gender = 'undefined' or gender is null;

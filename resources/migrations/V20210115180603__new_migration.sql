@@ -1,0 +1,1 @@
+UPDATE requests SET type = 'Virtual Access' where type != 'Transnational Access';
