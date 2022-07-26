@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import io.gitlab.arturbosch.detekt.detekt
+import kotlin.script.experimental.api.ScriptCompilationConfiguration.Default.properties
 
 val vertxVersion: String by project
 val logbackVersion: String by project
@@ -33,6 +34,7 @@ plugins {
 
     id("io.gitlab.arturbosch.detekt") version "1.9.1"
     id("com.github.honourednihilist.gradle-postgresql-embedded") version "0.4.0"
+    id("org.sonarqube") version "3.4.0.2513"
 }
 
 application {
@@ -145,4 +147,12 @@ detekt {
         "src/"
     )
     autoCorrect = true
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "DiSSCo_elvis-backend")
+        property("sonar.organization", "dissco")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }
