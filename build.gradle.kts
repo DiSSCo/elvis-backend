@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import io.gitlab.arturbosch.detekt.detekt
-import kotlin.script.experimental.api.ScriptCompilationConfiguration.Default.properties
 
 val vertxVersion: String by project
 val logbackVersion: String by project
