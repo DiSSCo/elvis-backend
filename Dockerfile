@@ -1,10 +1,10 @@
-FROM gradle:6.6-jdk14 as build
+FROM gradle:7-jdk17-alpine as build
 
 ADD --chown=gradle . /src
 WORKDIR /src
 RUN gradle installDist
 
-FROM openjdk:14-alpine
+FROM openjdk:17-slim
 
 COPY --from=build /src/build/install/elvis /app
 WORKDIR /app

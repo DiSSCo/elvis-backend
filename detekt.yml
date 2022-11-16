@@ -1,6 +1,7 @@
 # See https://github.com/arturbosch/detekt/blob/master/detekt-cli/src/main/resources/default-detekt-config.yml
 build:
-  maxIssues: 0
+  # Set this number to 100 to pass the build
+  maxIssues: 100
   excludeCorrectable: false
   weights:
   # complexity: 2

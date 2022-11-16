@@ -14,25 +14,30 @@ group = "org.synthesis"
 version = "0.0.1-SNAPSHOT"
 
 buildscript {
-    val kotlinVersion = "1.4.30"
+    val kotlinVersion = "1.7.10"
 
     repositories {
         jcenter()
+        maven {
+            url = uri("https://plugins.gradle.org/m2/")
+        }
     }
 
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
+        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.4.0.2513")
     }
 }
 
 plugins {
     application
 
-    kotlin("jvm") version "1.4.10"
+    kotlin("jvm") version "1.7.10"
     kotlin("plugin.serialization") version "1.4.30"
 
     id("io.gitlab.arturbosch.detekt") version "1.9.1"
     id("com.github.honourednihilist.gradle-postgresql-embedded") version "0.4.0"
+    id("org.sonarqube") version "3.4.0.2513"
 }
 
 application {
@@ -121,8 +126,8 @@ dependencies {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.languageVersion = "1.4"
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.languageVersion = "1.7"
+    kotlinOptions.jvmTarget = "17"
     kotlinOptions.freeCompilerArgs += listOf(
         "-Xuse-experimental=kotlin.time.ExperimentalTime",
         "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
@@ -145,4 +150,12 @@ detekt {
         "src/"
     )
     autoCorrect = true
+}
+
+sonarqube {
+    properties {
+        property("sonar.projectKey", "DiSSCo_elvis-backend")
+        property("sonar.organization", "dissco")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
 }
