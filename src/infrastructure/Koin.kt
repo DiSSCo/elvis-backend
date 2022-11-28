@@ -7,7 +7,6 @@ import io.vertx.pgclient.PgConnectOptions
 import io.vertx.pgclient.PgPool
 import io.vertx.sqlclient.PoolOptions
 import io.vertx.sqlclient.SqlClient
-import java.net.URI
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
@@ -87,12 +86,11 @@ val elvisModule = module {
                         )
                     )
                 )
-                endpointOverride(URI(getProperty("S3_HOST")))
                 region(Region.of(getProperty("S3_REGION")))
             }
             .build()
 
-        S3Filesystem(client)
+        S3Filesystem(client, getProperty("S3_BUCKET"))
     }
 
     single {
