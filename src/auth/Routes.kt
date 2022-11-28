@@ -16,8 +16,7 @@ fun Route.authRoutes() {
                 "authConfig" to AuthConfig(
                     realm = keycloakConfiguration.activeRealm.value,
                     url = keycloakConfiguration.serverUrl,
-                    clientId = keycloakConfiguration.uiClientInfo.id,
-                    clientSecret = keycloakConfiguration.adminClientInfo.secret
+                    clientId = keycloakConfiguration.uiClientInfo.id
                 ),
                 "available_groups" to listOf(
                     "administrator",

@@ -95,10 +95,6 @@ class DefaultKeycloakAdminApiClient(
         KeycloakBuilder.builder()
             .serverUrl(configuration.serverUrl)
             .realm("master")
-            .username(configuration.credentials.username)
-            .password(configuration.credentials.password)
-            .clientId(configuration.adminClientInfo.id)
-            .clientSecret(configuration.adminClientInfo.secret)
             .resteasyClient(
                 ResteasyClientBuilder().apply {
                     httpEngine(ClientHttpEngineBuilder43().resteasyClientBuilder(this).build())
