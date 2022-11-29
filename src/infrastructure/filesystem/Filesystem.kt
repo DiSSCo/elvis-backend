@@ -1,12 +1,12 @@
 package org.synthesis.infrastructure.filesystem
 
-import java.io.File
-import java.nio.ByteBuffer
 import kotlinx.coroutines.future.await
 import software.amazon.awssdk.core.async.AsyncRequestBody
 import software.amazon.awssdk.core.async.AsyncResponseTransformer
 import software.amazon.awssdk.services.s3.S3AsyncClient
 import software.amazon.awssdk.services.s3.model.*
+import java.io.File
+import java.nio.ByteBuffer
 
 sealed class FilesystemException(message: String? = null) : Exception(message) {
     class InteractionsFailed(message: String?) : FilesystemException(message)
@@ -23,11 +23,6 @@ data class FileData(
 )
 
 interface Filesystem {
-
-    /**
-     * @throws [FilesystemException.InteractionsFailed]
-     */
-    suspend fun createDirectory(path: Folder)
 
     /**
      * @throws [FilesystemException.InteractionsFailed]
@@ -57,22 +52,9 @@ interface Filesystem {
 }
 
 class S3Filesystem(
-    private val client: S3AsyncClient
+    private val client: S3AsyncClient,
+    private val bucket: String
 ) : Filesystem {
-
-    override suspend fun createDirectory(path: Folder) {
-        try {
-            client.withCatch {
-                val request = CreateBucketRequest.builder()
-                    .bucket(path.value)
-                    .build()
-
-                createBucket(request).await()
-            }
-        } catch (e: FilesystemException.BucketAlreadyExists) {
-            // not interests
-        }
-    }
 
     override suspend fun put(content: String, to: FileData) = uploadFile(AsyncRequestBody.fromString(content), to)
     override suspend fun copy(fromSource: File, to: FileData) = uploadFile(AsyncRequestBody.fromFile(fromSource), to)
@@ -81,8 +63,8 @@ class S3Filesystem(
     override suspend fun read(file: FileData): ByteBuffer {
         client.withCatch {
             val request = GetObjectRequest.builder()
-                .bucket(file.directory.value)
-                .key(file.name.value)
+                .bucket(bucket)
+                .key(file.directory.value + '/' + file.name.value)
                 .build()
 
             return getObject(request, AsyncResponseTransformer.toBytes()).await().asByteBuffer()
@@ -92,8 +74,8 @@ class S3Filesystem(
     override suspend fun remove(file: FileData) {
         client.withCatch {
             val request = DeleteObjectRequest.builder()
-                .bucket(file.directory.value)
-                .key(file.name.value)
+                .bucket(bucket)
+                .key(file.directory.value + '/' + file.name.value)
                 .build()
 
             deleteObject(request).await()
@@ -101,12 +83,10 @@ class S3Filesystem(
     }
 
     private suspend fun uploadFile(payload: AsyncRequestBody, to: FileData) {
-        createDirectory(to.directory)
-
         client.withCatch {
             val request = PutObjectRequest.builder()
-                .bucket(to.directory.value)
-                .key(to.name.value)
+                .bucket(bucket)
+                .key(to.directory.value + '/' + to.name.value)
                 .build()
 
             client.putObject(request, payload).await()
