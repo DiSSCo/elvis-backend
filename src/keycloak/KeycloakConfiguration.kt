@@ -3,6 +3,7 @@ package org.synthesis.keycloak
 data class KeycloakConfiguration(
     val activeRealm: KeycloakRealm,
     val serverUrl: String,
+    val apiClientInfo: KeycloakApiClient,
     val uiClientInfo: KeycloakApiClient
 ) {
     companion object {
@@ -19,4 +20,5 @@ data class KeycloakRealm(
 
 data class KeycloakApiClient(
     val id: String,
+    val secret: String?
 )

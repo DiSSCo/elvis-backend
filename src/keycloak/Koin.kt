@@ -18,8 +18,13 @@ val keycloakModule = module {
         KeycloakConfiguration(
             activeRealm = get(),
             serverUrl = getProperty("KEYCLOAK_SERVER_URL"),
+            apiClientInfo = KeycloakApiClient(
+                id = getProperty("KEYCLOAK_API_CLIENT_ID"),
+                secret = getProperty("KEYCLOAK_API_CLIENT_SECRET")
+            ),
             uiClientInfo = KeycloakApiClient(
-                id = getProperty("KEYCLOAK_UI_CLIENT_ID")
+                id = getProperty("KEYCLOAK_UI_CLIENT_ID"),
+                secret = null
             )
         )
     }
