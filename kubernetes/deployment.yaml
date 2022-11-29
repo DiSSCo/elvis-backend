@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elvis-backend-deployment
+  labels:
+    app: elvis-backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elvis-backend
+  template:
+    metadata:
+      labels:
+        app: elvis-backend
+    spec:
+      containers:
+        - name: elvis-backend
+          image: public.ecr.aws/dissco/elvis-backend
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_HOST
+              value: database-1.cbppwfnjypll.eu-west-2.rds.amazonaws.com
+            - name: DATABASE_NAME
+              value: elvis
+            - name: DATABASE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-user-pass
+                  key: username
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-user-pass
+                  key: password
+            - name: MAILER
+              value: vertx
+            - name: MAILER_SMTP_HOSTNAME
+              value: email-smtp.eu-central-1.amazonaws.com
+            - name: MAILER_SMTP_PORT
+              value: "587"
+            - name: MAILER_SMTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: mailer_smtp_username
+            - name: MAILER_SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mail-secret
+                  key: mailer_smtp_password
+            - name: MAILER_FROM_EMAIL
+              value: noreply@elvis.dissco.eu
+            - name: MAILER_FROM_NAME
+              value: European Loans and Visits System
+            - name: MAILER_SMTP_TLS
+              value: "1"
+            - name: FRONTEND_URL
+              value: https://elvis.dissco.tech
+            - name: S3_BUCKET
+              value: dissco-elvis-data-production
+            - name: S3_REGION
+              value: eu-west-2
+            - name: S3_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: elvis-s3-secret
+                  key: secret_key
+            - name: S3_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: elvis-s3-secret
+                  key: access_key
+            - name: S3_REQUESTS_BUCKET
+              value: requests
+            - name: KEYCLOAK_SERVER_URL
+              value: https://elvis.dissco.eu/auth
+            - name: KEYCLOAK_REALM
+              value: elvis
+            - name: KEYCLOAK_USER
+              value: elvis
+            - name: KEYCLOAK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: elvis-keycloak-secret
+                  key: keycloak_password
+            - name: KEYCLOAK_UI_CLIENT_ID
+              value: elvis-ui
+            - name: KEYCLOAK_API_CLIENT_ID
+              value: api-client
+            - name: KEYCLOAK_API_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: elvis-keycloak-secret
+                  key: keycloak_api_client_secret

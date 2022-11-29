@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: elvis-backend-service
+spec:
+  selector:
+    app: elvis-backend
+  ports:
+    - protocol: TCP
+      port: 8080
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: elvis-backend-route
+  namespace: default
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`elvis.dissco.tech`) && PathPrefix(`/api`)
+      kind: Rule
+      services:
+        - name: elvis-backend-service
+          namespace: default
+          port: 8080
+      middlewares:
+        - name: elvis-backend-stripprefix
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: elvis-backend-stripprefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /api
+    forceSlash: false
