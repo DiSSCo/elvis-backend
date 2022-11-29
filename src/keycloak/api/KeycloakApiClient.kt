@@ -59,8 +59,8 @@ data class DefaultKeycloakClient(
             Configuration(
                 configuration.serverUrl,
                 configuration.activeRealm.value,
-                configuration.uiClientInfo.id,
-                mapOf(),
+                configuration.apiClientInfo.id,
+                mapOf("secret" to configuration.apiClientInfo.secret),
                 null
             )
         )
@@ -71,7 +71,7 @@ data class DefaultKeycloakClient(
             url = configuration.tokenUrl(),
             formParameters = Parameters.build {
                 set("grant_type", KeycloakClient.grantType)
-                set("audience", configuration.uiClientInfo.id)
+                set("audience", configuration.apiClientInfo.id)
                 set("response_mode", KeycloakClient.responseMode)
 
                 permissions.forEach {
