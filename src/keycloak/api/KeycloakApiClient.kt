@@ -3,6 +3,7 @@ package org.synthesis.keycloak.api
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import java.util.*
 import org.keycloak.authorization.client.AuthzClient
@@ -67,7 +68,7 @@ data class DefaultKeycloakClient(
     }
 
     override suspend fun allowed(token: String, vararg permissions: Permission): Boolean = try {
-        val response = client.submitForm<String>(
+        val response = client.submitForm(
             url = configuration.tokenUrl(),
             formParameters = Parameters.build {
                 set("grant_type", KeycloakClient.grantType)
@@ -83,7 +84,7 @@ data class DefaultKeycloakClient(
         }
 
         /** @todo: fix me */
-        val isSuccess = response == "{\"result\":true}"
+        val isSuccess = response.bodyAsText() == "{\"result\":true}"
 
         isSuccess.also {
             if (!it) {

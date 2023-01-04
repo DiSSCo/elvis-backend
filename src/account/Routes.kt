@@ -1,8 +1,8 @@
 package org.synthesis.account
 
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import java.time.LocalDate
 import org.koin.ktor.ext.inject
 import org.synthesis.account.manage.UpdateUserAccountRequest
@@ -36,7 +36,7 @@ fun Route.profileRoutes() {
                     id = currentUser.id,
                     fullName = UserFullName(request.firstName, request.lastName),
                     attributes = currentUser.attributes.copy(
-                        gender = request.gender?.let { Gender.valueOf(it.toUpperCase()) } ?: Gender.OTHER,
+                        gender = request.gender?.let { Gender.valueOf(it.uppercase()) } ?: Gender.OTHER,
                         relatedInstitutionId = request.relatedInstitutionId?.let { InstitutionId.fromString(it) },
                         orcId = request.orcId?.let { OrcId(it) },
                         birthDate = request.birthDate?.let { LocalDate.parse(it) },

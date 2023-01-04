@@ -32,7 +32,7 @@ fun UserAccount.asView(): UserView {
         firstName = fullName.firstName,
         lastName = fullName.lastName,
         birthDateTime = attributes.birthDate,
-        gender = attributes.gender.name.toLowerCase(),
+        gender = attributes.gender.name.lowercase(),
         groups = groups,
         attributes = mapOf(
             "orcId" to attributes.orcId?.id,
@@ -40,7 +40,7 @@ fun UserAccount.asView(): UserView {
             "relatedInstitutionId" to attributes.relatedInstitutionId?.grid?.value,
             "homeInstitutionId" to attributes.homeInstitutionId,
             "nationality" to attributes.nationality,
-            "countryCode" to attributes.countryCode?.id?.toUpperCase(),
+            "countryCode" to attributes.countryCode?.id?.uppercase(),
             "countryOtherInstitution" to attributes.countryOtherInstitution
         ),
         bannedAt = bannedAt,

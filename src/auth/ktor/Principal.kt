@@ -80,7 +80,7 @@ private fun JWTCredential.orcIdAttribute(): OrcId? = payload
     ?.let { OrcId(it) }
 
 /**
- * Parsing the token and extracting the birth date
+ * Parsing the token and extracting the birthdate
  */
 private fun JWTCredential.birthDateAttribute(): LocalDate? = payload
     .getClaim(KeycloakAttribute.birthDateAttributeName)
@@ -93,7 +93,7 @@ private fun JWTCredential.birthDateAttribute(): LocalDate? = payload
 private fun JWTCredential.genderAttribute(): Gender = payload
     .getClaim(KeycloakAttribute.genderAttributeName)
     ?.asString()
-    ?.let { Gender.valueOf(it.toUpperCase()) }
+    ?.let { Gender.valueOf(it.uppercase()) }
     ?: Gender.OTHER
 
 /**

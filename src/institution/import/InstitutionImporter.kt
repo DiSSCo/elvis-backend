@@ -38,7 +38,7 @@ object GridImporter : InstitutionImporter {
 
         try {
             val responseElement = Jsoup.connect(url).get().allElements.first()
-            val institutionData = responseElement.hydrate()
+            val institutionData = responseElement!!.hydrate()
 
             if (institutionData.isValid()) {
                 return@withContext institutionData

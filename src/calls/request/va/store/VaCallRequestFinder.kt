@@ -66,7 +66,7 @@ class VaCallRequestFinder(
             general = serializer.unserialize(getString("form"), DynamicForm::class.java),
             institutions = institutions.associateBy { it.institutionId() }.toMutableMap()
         ),
-        status = VaCallRequest.Status.valueOf(getString("status").toUpperCase()),
+        status = VaCallRequest.Status.valueOf(getString("status").uppercase()),
         deletedAt = getLocalDateTime("deleted_at"),
         resourceId = getUUID("resource_id")?.let { KeycloakResourceId(it) }
     )

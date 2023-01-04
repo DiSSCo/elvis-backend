@@ -255,7 +255,7 @@ val callModule = module {
                     name = row.getString("title"),
                     description = row.getString("description"),
                     additionalInfo = row.getString("additional_info"),
-                    type = row.getString("call_type").toLowerCase(),
+                    type = row.getString("call_type").lowercase(),
                     startDate = fromDate,
                     endDate = endDate,
                     status = if (endDate != null && endDate >= LocalDateTime.now() && deletedAt == null) {
@@ -361,7 +361,7 @@ val callModule = module {
                     institutionId = InstitutionId.fromString(row.getString("institution_id")),
                     coordinatorId = row.getUUID("coordinator_id"),
                     type = runBlocking {
-                        requestTypeAllocator.allocate(row.getUUID("id"))?.name?.toLowerCase() ?: ""
+                        requestTypeAllocator.allocate(row.getUUID("id"))?.name?.lowercase() ?: ""
                     },
                     status = row.getString("status"),
                     isDeleted = deletedAt != null

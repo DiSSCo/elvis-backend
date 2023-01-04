@@ -100,6 +100,6 @@ class PostgresCoordinatorAllocator(
         firstName = getString("first_name"),
         lastName = getString("last_name"),
         institutionId = InstitutionId.fromString(getString("institution_id")),
-        type = CoordinatorType.valueOf(getString("access").toString().toUpperCase())
+        type = CoordinatorType.valueOf(getString("access").toString().uppercase())
     )
 }

@@ -1,8 +1,8 @@
 package org.synthesis.search
 
-import io.ktor.application.call
-import io.ktor.routing.Route
-import io.ktor.routing.post
+import io.ktor.server.application.call
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.post
 import org.koin.ktor.ext.inject
 import org.synthesis.auth.AuthorizationService
 import org.synthesis.auth.interceptor.isGranted

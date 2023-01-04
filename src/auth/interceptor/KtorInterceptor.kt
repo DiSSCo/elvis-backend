@@ -1,8 +1,8 @@
 package org.synthesis.auth.interceptor
 
-import io.ktor.application.*
-import io.ktor.auth.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.routing.*
 import io.ktor.util.pipeline.PipelineContext
 import org.synthesis.account.UserAccount
 import org.synthesis.auth.AuthException

@@ -1,6 +1,5 @@
 package org.synthesis.calls.request
 
-import java.util.*
 import org.synthesis.account.UserAccountId
 import org.synthesis.calls.request.ta.TaCallRequest
 import org.synthesis.calls.request.ta.scoring.ScoreFormId
@@ -11,9 +10,11 @@ import org.synthesis.institution.InstitutionId
 sealed class CallRequestException(message: String) : Exception(message) {
     class RequestNotApproved : CallRequestException("Request not approved")
 
-    class InstitutionAlreadyAdded(id: InstitutionId) : CallRequestException("Institution `$id` already added")
+    class InstitutionAlreadyAdded(id: InstitutionId) :
+        CallRequestException("Institution `$id` already added")
 
-    class InstitutionNotAdded(id: InstitutionId) : CallRequestException("Institution `$id` not added")
+    class InstitutionNotAdded(id: InstitutionId) :
+        CallRequestException("Institution `$id` not added")
 
     class UnableToSendRequest(id: CallRequestId) :
         CallRequestException("Request (`${id.uuid}`) can only be sent in Draft status")
@@ -46,5 +47,6 @@ sealed class CallRequestException(message: String) : Exception(message) {
             "The `${id.uuid}` user is not allowed to evaluate the request as it does not belong to the `${countryCode.id}` country"
         )
 
-    class ScoreFormNotAdded(id: ScoreFormId) : CallRequestException("Institution `${id.id}` not added")
+    class ScoreFormNotAdded(id: ScoreFormId) :
+        CallRequestException("Institution `${id.id}` not added")
 }

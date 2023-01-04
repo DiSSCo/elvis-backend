@@ -2,9 +2,10 @@
 
 package org.synthesis.institution
 
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
 import java.util.*
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.Size
+
 import org.synthesis.account.UserAccountId
 import org.synthesis.country.CountryCode
 import org.synthesis.formbuilder.FieldValue

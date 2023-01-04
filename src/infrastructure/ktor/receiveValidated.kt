@@ -1,10 +1,10 @@
 package org.synthesis.infrastructure.ktor
 
-import io.ktor.application.ApplicationCall
-import io.ktor.request.receive
+import io.ktor.server.application.ApplicationCall
+import io.ktor.server.request.receive
+import jakarta.validation.Validation
 import java.lang.IllegalArgumentException
 import java.util.*
-import javax.validation.Validation
 import kotlin.reflect.KClass
 import org.synthesis.infrastructure.IncorrectRequestParameters
 

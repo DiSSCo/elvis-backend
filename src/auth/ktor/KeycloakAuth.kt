@@ -6,8 +6,8 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.impl.JWTParser
 import com.auth0.jwt.interfaces.DecodedJWT
 import com.auth0.jwt.interfaces.Payload
-import io.ktor.application.*
-import io.ktor.auth.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.http.auth.*
 import io.ktor.util.*
 import java.util.*
@@ -17,8 +17,8 @@ val authTokenAttributeKey = AttributeKey<HttpAuthHeader>("KeycloakJWTAuth")
 /**
  * Authentication configuration using Keycloak service
  */
-fun Authentication.Configuration.keycloak(configure: KeycloakAuthenticationProvider.Configuration.() -> Unit) {
-    val provider = KeycloakAuthenticationProvider.Configuration().apply(configure).build()
+fun Authentication(configure: KeycloakAuthenticationProvider.Config.() -> Unit) {
+    val provider = KeycloakAuthenticationProvider.Config().apply(configure).build()
 
     provider.pipeline.intercept(AuthenticationPipeline.RequestAuthentication) { context ->
         try {

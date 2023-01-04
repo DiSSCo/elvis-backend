@@ -1,6 +1,6 @@
 package org.synthesis.account.manage
 
-import io.ktor.application.*
+import io.ktor.server.application.*
 import org.synthesis.account.UserAccountId
 import org.synthesis.infrastructure.IncorrectRequestParameters
 import org.synthesis.infrastructure.ktor.receiveUuidFromParameters

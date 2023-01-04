@@ -2,13 +2,13 @@
 
 package org.synthesis.contact
 
-import io.ktor.application.call
+import io.ktor.server.application.call
 import io.ktor.http.content.PartData
 import io.ktor.http.content.forEachPart
 import io.ktor.http.content.streamProvider
-import io.ktor.request.receiveMultipart
-import io.ktor.routing.Route
-import io.ktor.routing.post
+import io.ktor.server.request.receiveMultipart
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.post
 import io.ktor.utils.io.*
 import org.koin.ktor.ext.inject
 import org.synthesis.auth.interceptor.authenticatedUser

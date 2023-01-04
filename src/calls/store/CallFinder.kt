@@ -48,7 +48,7 @@ class PostgresCallFinder(
 
     private fun Row.hydrate(): Call = Call(
         id = CallId(getUUID("id")),
-        type = CallType.valueOf(getString("call_type").toUpperCase()),
+        type = CallType.valueOf(getString("call_type").uppercase()),
         lifetime = CallLifeTime.create(
             from = getLocalDateTime("start_date"),
             to = getLocalDateTime("end_date")

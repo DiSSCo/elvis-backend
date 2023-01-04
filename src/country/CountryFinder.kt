@@ -30,7 +30,7 @@ class DefaultCountryFinder(
     override suspend fun find(code: CountryCode): Country? = sqlClient.fetchOne(
         select("countries") {
             where {
-                "iso" eq code.id.toUpperCase()
+                "iso" eq code.id.uppercase()
             }
         }
     )?.hydrate()
@@ -38,7 +38,7 @@ class DefaultCountryFinder(
     override suspend fun findByShortTitle(shortTitle: String): Country? = sqlClient.fetchOne(
         select("countries") {
             where {
-                "short_name" eq shortTitle.toUpperCase()
+                "short_name" eq shortTitle.uppercase()
             }
         }
     )?.hydrate()
@@ -52,8 +52,8 @@ class DefaultCountryFinder(
     )?.hydrate()
 
     private fun Row.hydrate() = Country(
-        isoCode = CountryCode(getString("iso").toUpperCase()),
-        isoFullCode = getString("iso3").toUpperCase(),
+        isoCode = CountryCode(getString("iso").uppercase()),
+        isoFullCode = getString("iso3").uppercase(),
         shortName = getString("short_name"),
         fullName = getString("full_name"),
         currencyCode = getInteger("currency_code"),

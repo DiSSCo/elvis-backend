@@ -52,7 +52,7 @@ class TaCallRequestFinder(
                 institutionId = InstitutionId(GRID(it.getString("institution_id"))),
                 coordinatorId = UserAccountId(it.getUUID("coordinator_id")),
                 form = serializer.unserialize(it.getString("form"), DynamicForm::class.java),
-                status = TaCallRequest.Status.valueOf(it.getString("status").toUpperCase()),
+                status = TaCallRequest.Status.valueOf(it.getString("status").uppercase()),
                 deletedAt = it.getLocalDateTime("deleted_at"),
                 id = it.getUUID("id")
             )
@@ -117,7 +117,7 @@ class TaCallRequestFinder(
                     .toMap()
                     .toMutableMap()
             ),
-            status = TaCallRequest.Status.valueOf(getString("status").toUpperCase()),
+            status = TaCallRequest.Status.valueOf(getString("status").uppercase()),
             deletedAt = getLocalDateTime("deleted_at"),
             resourceId = getUUID("resource_id")?.let { KeycloakResourceId(it) },
             country = getString("country_code")?.let {

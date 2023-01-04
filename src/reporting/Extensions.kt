@@ -1,6 +1,6 @@
 package org.synthesis.reporting
 
-import io.ktor.application.*
+import io.ktor.server.application.*
 import org.synthesis.infrastructure.IncorrectRequestParameters
 
 /**

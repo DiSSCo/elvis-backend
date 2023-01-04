@@ -74,7 +74,7 @@ class PgCommentFinder(
         authorId = UserAccountId(getUUID("author_id")),
         threadId = CommentThreadId(getUUID("thread_id")),
         payload = CommentPayload(
-            format = CommentFormat.valueOf(getString("format").toUpperCase()),
+            format = CommentFormat.valueOf(getString("format").uppercase()),
             data = getString("message").escapeString()
         ),
         createdAt = getLocalDateTime("created_at"),

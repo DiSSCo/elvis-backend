@@ -1,18 +1,18 @@
 package org.synthesis
 
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import io.ktor.application.*
-import io.ktor.auth.*
-import io.ktor.features.*
-import io.ktor.http.HttpStatusCode
-import io.ktor.jackson.jackson
-import io.ktor.locations.*
-import io.ktor.response.*
-import io.ktor.routing.*
-import io.ktor.util.InternalAPI
-import io.ktor.util.KtorExperimentalAPI
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.ObsoleteCoroutinesApi
+import io.ktor.http.*
+import io.ktor.serialization.jackson.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.locations.*
+import io.ktor.server.plugins.callloging.*
+import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.plugins.cors.routing.*
+import io.ktor.server.plugins.dataconversion.*
+import io.ktor.server.plugins.statuspages.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -36,11 +36,6 @@ import org.synthesis.reporting.reportingRoutes
 import org.synthesis.search.searchRoutes
 import org.synthesis.settings.settingsRoutes
 
-@InternalAPI
-@KtorExperimentalAPI
-@KtorExperimentalLocationsAPI
-@ExperimentalCoroutinesApi
-@ObsoleteCoroutinesApi
 @Suppress("LongMethod")
 fun Application.module() {
 
@@ -57,8 +52,8 @@ fun Application.module() {
         anyHost()
         allowCredentials = true
         allowNonSimpleContentTypes = true
-        header("access-control-allow-origin")
-        header("authorization")
+        allowHeader("access-control-allow-origin")
+        allowHeader("authorization")
         exposeHeader("Content-Disposition")
     }
 
@@ -71,26 +66,27 @@ fun Application.module() {
     }
 
     install(StatusPages) {
-        exception<IncorrectRequestParameters> { cause ->
+        exception<IncorrectRequestParameters> { call, cause ->
             logger.error(cause.message.orEmpty(), cause)
 
             call.respondBadRequest("Request validation failed", cause.violations)
         }
-        exception<AuthException.NotAllowed> { cause ->
+        exception<AuthException.NotAllowed> { call, cause ->
             logger.error(cause.message.orEmpty(), cause)
 
             call.respond(HttpStatusCode.Forbidden)
         }
-        exception<AuthException> { cause ->
+        exception<AuthException> { call, cause ->
             logger.error(cause.message.orEmpty(), cause)
 
             call.respondBadRequest("Incorrect auth token", mapOf("token" to cause.message))
         }
-        exception<Throwable> { cause ->
+        exception<Throwable> { call, cause ->
 
             logger.error(cause.message.orEmpty(), cause)
 
-            val message = if (cause is ApplicationException) cause.message else "An internal error has occurred"
+            val message =
+                if (cause is ApplicationException) cause.message else "An internal error has occurred"
 
             call.respond(
                 HttpStatusCode.InternalServerError,

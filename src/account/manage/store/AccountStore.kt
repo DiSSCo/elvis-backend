@@ -34,9 +34,9 @@ class DefaultAccountStore(
                     "orc_id" to account.attributes.orcId?.id,
                     "institution_id" to account.attributes.institutionId?.grid?.value,
                     "related_institution_id" to account.attributes.relatedInstitutionId?.grid?.value,
-                    "gender" to account.attributes.gender.name.toLowerCase(),
+                    "gender" to account.attributes.gender.name.lowercase(),
                     "birth_date" to account.attributes.birthDate,
-                    "country_code" to account.attributes.countryCode?.id?.toUpperCase(),
+                    "country_code" to account.attributes.countryCode?.id?.uppercase(),
                     "home_institution_id" to account.attributes.homeInstitutionId,
                     "nationality" to account.attributes.nationality,
                     "country_other_institution" to account.attributes.countryOtherInstitution,
@@ -60,12 +60,12 @@ class DefaultAccountStore(
                     "orc_id" to account.attributes.orcId?.id,
                     "institution_id" to account.attributes.institutionId?.grid?.value,
                     "related_institution_id" to account.attributes.relatedInstitutionId?.grid?.value,
-                    "gender" to account.attributes.gender.name.toLowerCase(),
+                    "gender" to account.attributes.gender.name.lowercase(),
                     "birth_date" to account.attributes.birthDate,
                     "home_institution_id" to account.attributes.homeInstitutionId,
                     "nationality" to account.attributes.nationality,
                     "country_other_institution" to account.attributes.countryOtherInstitution,
-                    "country_code" to account.attributes.countryCode?.id?.toUpperCase(),
+                    "country_code" to account.attributes.countryCode?.id?.uppercase(),
                     "banned_at" to if (account.status is UserAccountStatus.Banned) account.status.dateTime else null,
                     "banned_with_reason" to if (account.status is UserAccountStatus.Banned) account.status.reason else null
                 )
@@ -150,7 +150,7 @@ class DefaultAccountStore(
                 rows = mapOf(
                     "id" to UUID.randomUUID(),
                     "user_id" to userId.uuid,
-                    "country_code" to countryCode.id.toUpperCase(),
+                    "country_code" to countryCode.id.uppercase(),
                 )
             ) {
                 onConflict(
@@ -166,7 +166,7 @@ class DefaultAccountStore(
             delete("scorers") {
                 where {
                     "user_id" eq userId.uuid
-                    "country_code" eq countryCode.id.toUpperCase()
+                    "country_code" eq countryCode.id.uppercase()
                 }
             }
         )
@@ -179,7 +179,7 @@ class DefaultAccountStore(
                 rows = mapOf(
                     "id" to UUID.randomUUID(),
                     "user_id" to userId.uuid,
-                    "country_code" to countryCode.id.toUpperCase(),
+                    "country_code" to countryCode.id.uppercase(),
                 )
             ) {
                 onConflict(
@@ -195,7 +195,7 @@ class DefaultAccountStore(
             delete("taf_administrators") {
                 where {
                     "user_id" eq userId.uuid
-                    "country_code" eq countryCode.id.toUpperCase()
+                    "country_code" eq countryCode.id.uppercase()
                 }
             }
         )
@@ -213,7 +213,7 @@ class DefaultAccountStore(
                     "id" to UUID.randomUUID(),
                     "user_id" to userId.uuid,
                     "institution_id" to institutionId.grid.value,
-                    "access" to access.name.toLowerCase()
+                    "access" to access.name.lowercase()
                 )
             ) {
                 onConflict(
@@ -234,7 +234,7 @@ class DefaultAccountStore(
                 where {
                     "user_id" eq userId.uuid
                     "institution_id" eq institutionId.grid.value
-                    "access" eq access.name.toLowerCase()
+                    "access" eq access.name.lowercase()
                 }
             }
         )

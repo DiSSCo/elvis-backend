@@ -85,9 +85,9 @@ class KeycloakUserAccountFinder(
                 orcId = getString("orc_id")?.let { OrcId(it) },
                 institutionId = getString("institution_id")?.let { InstitutionId.fromString(it) },
                 relatedInstitutionId = getString("related_institution_id")?.let { InstitutionId.fromString(it) },
-                gender = Gender.valueOf(getString("gender").toUpperCase()),
+                gender = Gender.valueOf(getString("gender").uppercase()),
                 birthDate = getLocalDate("birth_date"),
-                countryCode = getString("country_code")?.let { CountryCode(it.toUpperCase()) },
+                countryCode = getString("country_code")?.let { CountryCode(it.uppercase()) },
                 nationality = getString("nationality"),
                 homeInstitutionId = getString("home_institution_id"),
                 countryOtherInstitution = getString("country_other_institution")

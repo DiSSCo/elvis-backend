@@ -1,6 +1,6 @@
 package org.synthesis.auth.ktor
 
-import io.ktor.auth.*
+import io.ktor.server.auth.*
 import org.synthesis.account.UserAccountFinder
 import org.synthesis.account.manage.store.AccountStore
 import org.synthesis.auth.AuthService

@@ -1,6 +1,6 @@
 package org.synthesis.institution
 
-import io.ktor.application.ApplicationCall
+import io.ktor.server.application.ApplicationCall
 import java.util.*
 import org.synthesis.infrastructure.IncorrectRequestParameters
 import org.synthesis.infrastructure.ktor.receiveFromParameters

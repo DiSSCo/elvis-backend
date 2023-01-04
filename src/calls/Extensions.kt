@@ -1,6 +1,6 @@
 package org.synthesis.calls
 
-import io.ktor.application.*
+import io.ktor.server.application.*
 import org.synthesis.attachment.AttachmentId
 import org.synthesis.calls.request.CallRequestId
 import org.synthesis.calls.request.ta.scoring.ScoreFormId

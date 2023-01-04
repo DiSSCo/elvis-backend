@@ -13,7 +13,7 @@ class BadExpiringAsyncReadCache<K, V>(
         get() = System.currentTimeMillis() + ttl.toMillis()
 
     suspend fun get(key: K): V? =
-        cache.getOrPut(key, { CachedValue(loadFn(key), maxAge) })?.let {
+        cache.getOrPut(key) { CachedValue(loadFn(key), maxAge) }?.let {
             if (it.maxAge > System.currentTimeMillis()) {
                 it.value
             } else {

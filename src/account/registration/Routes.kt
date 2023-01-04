@@ -1,8 +1,8 @@
 package org.synthesis.account.registration
 
-import io.ktor.application.*
-import io.ktor.response.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import java.time.LocalDate
 import kotlinx.coroutines.flow.toList
 import org.koin.ktor.ext.inject
@@ -34,7 +34,7 @@ fun Route.registrationRoutes() {
                     attributes = UserAccountAttributes(
                         orcId = request.orcId?.let { OrcId(it) },
                         relatedInstitutionId = request.relatedInstitutionId?.let { InstitutionId.fromString(it) },
-                        gender = request.gender?.let { Gender.valueOf(it.toUpperCase()) } ?: Gender.OTHER,
+                        gender = request.gender?.let { Gender.valueOf(it.uppercase()) } ?: Gender.OTHER,
                         birthDate = request.birthDate?.let { LocalDate.parse(it) },
                         nationality = request.nationality.toString(),
                         homeInstitutionId = request.homeInstitutionId.toString(),

@@ -2,7 +2,10 @@
 
 package org.synthesis.account.registration
 
-import javax.validation.constraints.*
+import jakarta.validation.constraints.Email
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
+
 
 data class RegistrationRequest(
     @get:NotBlank

@@ -67,7 +67,7 @@ class PostgreSqlSearchAdapter<T>(
 
         request.queries.forEach { query ->
             query.criteria.forEach { searchCriteria ->
-                if (query.type.toLowerCase() == "and") {
+                if (query.type.lowercase() == "and") {
                     whereCriteria.add(searchCriteria)
                 } else {
                     orWhereCriteria.add(searchCriteria)

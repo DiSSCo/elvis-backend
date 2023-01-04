@@ -1,7 +1,7 @@
 package org.synthesis.infrastructure
 
-import io.ktor.application.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
+import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 import org.synthesis.account.UserFullName
 import org.synthesis.auth.interceptor.withRole

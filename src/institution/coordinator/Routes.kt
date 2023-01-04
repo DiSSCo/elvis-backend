@@ -1,7 +1,7 @@
 package org.synthesis.institution.coordinator
 
-import io.ktor.application.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
+import io.ktor.server.routing.*
 import io.ktor.util.pipeline.*
 import kotlinx.coroutines.flow.toList
 import org.koin.ktor.ext.inject

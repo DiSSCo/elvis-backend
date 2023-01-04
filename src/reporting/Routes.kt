@@ -1,9 +1,9 @@
 package org.synthesis.reporting
 
-import io.ktor.application.call
+import io.ktor.server.application.call
 import io.ktor.http.*
-import io.ktor.response.*
-import io.ktor.routing.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import kotlinx.coroutines.flow.toList
 import org.koin.ktor.ext.inject
 import org.synthesis.auth.interceptor.withRole

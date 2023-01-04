@@ -1,10 +1,10 @@
 package org.synthesis.institution
 
-import io.ktor.application.*
-import io.ktor.routing.Route
-import io.ktor.routing.get
-import io.ktor.routing.post
-import io.ktor.routing.route
+import io.ktor.server.application.*
+import io.ktor.server.routing.Route
+import io.ktor.server.routing.get
+import io.ktor.server.routing.post
+import io.ktor.server.routing.route
 import io.ktor.util.*
 import kotlinx.coroutines.flow.toList
 import org.koin.ktor.ext.inject

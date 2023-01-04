@@ -1,5 +1,3 @@
-@file:Suppress("MatchingDeclarationName")
-
 package org.synthesis.auth
 
 data class AuthConfig(
