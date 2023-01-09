@@ -25,7 +25,7 @@ interface CommentFinder {
     /**
      * @throws [StorageException.InteractingFailed]
      */
-    suspend fun findAll(inThread: CommentThreadId): Flow<Comment>
+    fun findAll(inThread: CommentThreadId): Flow<Comment>
 }
 
 class PgCommentFinder(
@@ -48,7 +48,7 @@ class PgCommentFinder(
         return sqlClient.fetchOne(query)?.mapThread()
     }
 
-    override suspend fun findAll(inThread: CommentThreadId): Flow<Comment> {
+    override fun findAll(inThread: CommentThreadId): Flow<Comment> {
         val query = select("comments") {
             where { "thread_id" eq inThread.uuid }
 

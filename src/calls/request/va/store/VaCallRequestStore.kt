@@ -26,7 +26,7 @@ class VaCallRequestStore(
                     "form" to serializer.serialize(DynamicForm(request.content().general.values)),
                     "created_at" to request.createdAt(),
                     "requester_id" to request.authorId().uuid,
-                    "status" to request.status().name.toLowerCase(),
+                    "status" to request.status().name.lowercase(),
                     "title" to request.title(),
                     "deleted_at" to request.deletedAt(),
                     "resource_id" to request.resourceId()?.id,
@@ -43,7 +43,7 @@ class VaCallRequestStore(
                     on = "requests",
                     rows = mapOf(
                         "form" to serializer.serialize(DynamicForm(request.content().general.values)),
-                        "status" to request.status().name.toLowerCase(),
+                        "status" to request.status().name.lowercase(),
                         "title" to request.title(),
                         "deleted_at" to request.deletedAt()
                     )
@@ -65,7 +65,7 @@ class VaCallRequestStore(
                             "coordinator_id" to institutionForm.coordinatorId().uuid,
                             "created_at" to LocalDateTime.now(),
                             "form" to serializedInstituteForm,
-                            "status" to institutionForm.status().name.toLowerCase(),
+                            "status" to institutionForm.status().name.lowercase(),
                             "deleted_at" to institutionForm.deletedAt(),
                             "type" to "Virtual Access"
                         )
@@ -75,7 +75,7 @@ class VaCallRequestStore(
                             action = OnConflict.DoUpdate(
                                 rows = mapOf(
                                     "form" to serializedInstituteForm,
-                                    "status" to institutionForm.status().name.toLowerCase(),
+                                    "status" to institutionForm.status().name.lowercase(),
                                     "deleted_at" to institutionForm.deletedAt()
                                 )
                             )

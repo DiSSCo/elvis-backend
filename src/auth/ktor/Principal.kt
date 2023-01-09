@@ -16,12 +16,12 @@ import org.synthesis.keycloak.admin.KeycloakUserGroup
  */
 internal fun JWTCredential.principal(realm: KeycloakRealm, client: KeycloakApiClient): UserAccount = UserAccount(
     id = id(),
-    email = payload.getClaim("email").asString(),
+    email = "",
     groups = groups(),
     roles = roles(client),
     fullName = UserFullName(
-        firstName = payload.getClaim("given_name").asString(),
-        lastName = payload.getClaim("family_name").asString()
+        firstName = "",
+        lastName = ""
     ),
     realmId = realm.value,
     attributes = attributes(),

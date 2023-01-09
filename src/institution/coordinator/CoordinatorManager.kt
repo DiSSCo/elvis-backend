@@ -19,7 +19,7 @@ class CoordinatorManager(
     private val coordinatorStore: PgCoordinatorStore
 ) {
 
-    suspend fun list(role: String, institutionId: InstitutionId): Flow<UserAccount> =
+    fun list(role: String, institutionId: InstitutionId): Flow<UserAccount> =
         userAccountFinder.findWithCriteria {
             "group_list" inArray listOf(role)
             "institution_id" eq institutionId.grid.value

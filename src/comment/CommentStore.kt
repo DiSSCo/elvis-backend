@@ -41,7 +41,7 @@ class PgCommentStore(
                         "author_id" to comment.authorId.uuid,
                         "reply_to" to if (comment.replyTo != null) comment.replyTo.uuid else null,
                         "message" to comment.payload.data,
-                        "format" to comment.payload.format.toString().toLowerCase(),
+                        "format" to comment.payload.format.toString().lowercase(),
                         "created_at" to LocalDateTime.now()
                     )
                 )

@@ -1,17 +1,15 @@
 package org.synthesis.institution
 
 import io.ktor.server.application.*
-import io.ktor.server.routing.Route
-import io.ktor.server.routing.get
-import io.ktor.server.routing.post
-import io.ktor.server.routing.route
+import io.ktor.server.auth.*
+import io.ktor.server.routing.*
 import io.ktor.util.*
 import kotlinx.coroutines.flow.toList
 import org.koin.ktor.ext.inject
 import org.synthesis.account.UserAccountId
 import org.synthesis.attachment.*
 import org.synthesis.auth.interceptor.authenticatedUser
-import org.synthesis.auth.interceptor.withRole
+import org.synthesis.auth.ktor.withRole
 import org.synthesis.infrastructure.*
 import org.synthesis.infrastructure.ktor.*
 import org.synthesis.institution.facility.*
@@ -50,6 +48,7 @@ fun Route.institutionRoutes() {
     val facilityProvider by inject<FacilityProvider>()
     val facilityPresenter by inject<FacilityPresenter>()
     val institutionMembersProvider by inject<InstitutionMembersProvider>()
+    val institutionAlreadyAddedMessage = "institute with the specified GRID already exists"
 
     route("/institutions/") {
         /**
@@ -69,14 +68,18 @@ fun Route.institutionRoutes() {
 
             call.respondSuccess(
                 data = presenter.find(institutionId)
-                    ?: throw IncorrectRequestParameters.create("institutionId", "Institution not found")
+                    ?: throw IncorrectRequestParameters.create(
+                        "institutionId",
+                        "Institution not found"
+                    )
             )
         }
 
-        /**
-         * Add new institution.
-         */
-        withRole("institution_add") {
+        authenticate {
+            withRole("institution_add") {}
+            /**
+             * Add new institution.
+             */
             post {
 
                 val command = call.receiveValidated<InstitutionCommand.Add>()
@@ -88,16 +91,17 @@ fun Route.institutionRoutes() {
                 } catch (e: InstituteException.InstitutionAlreadyAdded) {
                     throw IncorrectRequestParameters.create(
                         field = "id",
-                        message = "institute with the specified GRID already exists"
+                        message = institutionAlreadyAddedMessage
                     )
                 }
             }
         }
 
-        /**
-         * Update institution details form.
-         */
-        withRole("institution_edit") {
+        authenticate {
+            withRole("institution_edit") {}
+            /**
+             * Update institution details form.
+             */
             post("/{institutionId}/setFormValue") {
                 val command = call.receiveValidated<InstitutionCommand.Update>()
                 try {
@@ -106,27 +110,25 @@ fun Route.institutionRoutes() {
                 } catch (e: InstituteException.InstitutionAlreadyAdded) {
                     throw IncorrectRequestParameters.create(
                         field = "id",
-                        message = "institute with the specified GRID already exists"
+                        message = institutionAlreadyAddedMessage
                     )
                 }
             }
-        }
 
-        /**
-         * Delete institution details form group.
-         */
-        withRole("institution_edit") {
+            /**
+             * Delete institution details form group.
+             */
+
             post("/{institutionId}/delete-group") {
                 val command = call.receiveValidated<InstitutionCommand.RemoveGroup>()
                 institutionProvider.handle(command, call.institutionId())
                 call.respondSuccess()
             }
-        }
 
-        /**
-         * Change institution name.
-         */
-        withRole("institution_edit") {
+
+            /**
+             * Change institution name.
+             */
             post("/{institutionId}/change_name") {
                 val command = call.receiveValidated<InstitutionCommand.ChangeName>()
                 try {
@@ -135,7 +137,7 @@ fun Route.institutionRoutes() {
                 } catch (e: InstituteException.InstitutionAlreadyAdded) {
                     throw IncorrectRequestParameters.create(
                         field = "id",
-                        message = "institute with the specified GRID already exists"
+                        message = institutionAlreadyAddedMessage
                     )
                 }
             }
@@ -146,7 +148,8 @@ fun Route.institutionRoutes() {
             /**
              * Create a new facility
              */
-            withRole("facility_create") {
+            authenticate {
+                withRole("facility_create") {}
                 post {
                     val facilityId = FacilityId.next()
 
@@ -158,14 +161,20 @@ fun Route.institutionRoutes() {
                         )
                     )
 
-                    call.respondCreated("Facility successful created", mapOf("id" to facilityId.uuid))
+                    call.respondCreated(
+                        "Facility successful created",
+                        mapOf("id" to facilityId.uuid)
+                    )
                 }
             }
 
-            /**
-             * Set facility form value.
-             */
-            withRole("facility_edit") {
+
+            authenticate {
+                withRole("facility_edit") {}
+                /**
+                 * Set facility form value.
+                 */
+
                 post("/{facilityId}/setFormValue") {
                     val formData = call.receiveValidated<SetFacilityDataRequest>()
 
@@ -183,40 +192,39 @@ fun Route.institutionRoutes() {
                 /**
                  * Upload facility image.
                  */
-                withRole("facility_edit") {
-                    post("/{facilityId}/images") {
+                post("/{facilityId}/images") {
 
-                        val facilityId = call.facilityId()
-                        val storedFiles: MutableList<AttachmentId> = mutableListOf()
+                    val facilityId = call.facilityId()
+                    val storedFiles: MutableList<AttachmentId> = mutableListOf()
 
-                        call.receiveFiles().forEach {
-                            storedFiles.add(
-                                attachmentProvider.store(
-                                    originalName = it.originalFileName,
-                                    payload = it.content.toByteArray(),
-                                    metadata = AttachmentMetadata(
-                                        extension = it.extension,
-                                        mimeType = AttachmentMimeType(
-                                            base = it.contentType.contentType,
-                                            subType = it.contentType.contentSubtype
-                                        )
-                                    ),
-                                    to = AttachmentCollection(facilityId.uuid.toString())
-                                )
-                            )
-                        }
-
-                        facilityProvider.handle(
-                            FacilityCommand.AddImages(
-                                id = facilityId,
-                                storedFiles = storedFiles
+                    call.receiveFiles().forEach {
+                        storedFiles.add(
+                            attachmentProvider.store(
+                                originalName = it.originalFileName,
+                                payload = it.content.toByteArray(),
+                                metadata = AttachmentMetadata(
+                                    extension = it.extension,
+                                    mimeType = AttachmentMimeType(
+                                        base = it.contentType.contentType,
+                                        subType = it.contentType.contentSubtype
+                                    )
+                                ),
+                                to = AttachmentCollection(facilityId.uuid.toString())
                             )
                         )
-
-                        call.respondSuccess(data = storedFiles)
                     }
+
+                    facilityProvider.handle(
+                        FacilityCommand.AddImages(
+                            id = facilityId,
+                            storedFiles = storedFiles
+                        )
+                    )
+
+                    call.respondSuccess(data = storedFiles)
                 }
             }
+
 
             /**
              * Obtain facility image.
@@ -234,29 +242,31 @@ fun Route.institutionRoutes() {
                 call.respondSuccess(data = image)
             }
 
-            /**
-             * Remove facility image.
-             */
-            post("/{facilityId}/images/{imageId}/remove") {
-                val facilityId = call.facilityId()
-                val imageId = call.imageId()
-                attachmentProvider.remove(
-                    id = AttachmentId(imageId),
-                    from = AttachmentCollection(facilityId.uuid.toString())
-                )
-                facilityProvider.handle(
-                    FacilityCommand.RemoveImages(
-                        id = facilityId,
-                        storedImage = AttachmentId(imageId)
-                    )
-                )
-                call.respondSuccess()
-            }
+            authenticate {
+                withRole("facility_edit") {}
 
-            /**
-             * Remove facility field group
-             */
-            withRole("facility_edit") {
+                /**
+                 * Remove facility image.
+                 */
+                post("/{facilityId}/images/{imageId}/remove") {
+                    val facilityId = call.facilityId()
+                    val imageId = call.imageId()
+                    attachmentProvider.remove(
+                        id = AttachmentId(imageId),
+                        from = AttachmentCollection(facilityId.uuid.toString())
+                    )
+                    facilityProvider.handle(
+                        FacilityCommand.RemoveImages(
+                            id = facilityId,
+                            storedImage = AttachmentId(imageId)
+                        )
+                    )
+                    call.respondSuccess()
+                }
+
+                /**
+                 * Remove facility field group
+                 */
                 post("/{facilityId}/delete-group") {
                     val request = call.receiveValidated<RemoveFieldGroupRequest>()
 
@@ -271,10 +281,13 @@ fun Route.institutionRoutes() {
                 }
             }
 
-            /**
-             * Remove existing facility
-             */
-            withRole("facility_delete") {
+
+            authenticate {
+                withRole("facility_delete") {}
+
+                /**
+                 * Remove existing facility
+                 */
                 post("/{facilityId}/delete") {
                     facilityProvider.handle(
                         FacilityCommand.Remove(call.facilityId())
@@ -284,13 +297,18 @@ fun Route.institutionRoutes() {
                 }
             }
 
-            /**
-             * Receive facility information
-             */
-            withRole("facility_view") {
+
+            authenticate {
+                withRole("facility_view") {}
+                /**
+                 * Receive facility information
+                 */
                 get("/{facilityId}") {
                     val facility = facilityPresenter.find(call.facilityId())
-                        ?: throw IncorrectRequestParameters.create("facilityId", "Facility not found")
+                        ?: throw IncorrectRequestParameters.create(
+                            "facilityId",
+                            "Facility not found"
+                        )
 
                     call.respondSuccess(facility)
                 }
@@ -298,37 +316,41 @@ fun Route.institutionRoutes() {
         }
 
         route("/{institutionId}/people") {
+            authenticate {
 
-            /**
-             * List of the institution members.
-             */
-            get {
-                call.respondCollection(
-                    institutionMembersProvider.list(call.institutionId()).toList()
-                )
-            }
+                /**
+                 * List of the institution members.
+                 */
+                get {
+                    call.respondCollection(
+                        institutionMembersProvider.list(call.institutionId()).toList()
+                    )
+                }
 
-            /**
-             * Invite user to the institute.
-             */
-            post("/invite") {
-                institutionMembersProvider.attach(
-                    id = UserAccountId(call.receiveValidated<ManageInstituteMember>().id),
-                    toInstitutionId = call.institutionId()
-                )
 
-                call.respondSuccess()
-            }
+                /**
+                 * Invite user to the institute.
+                 */
+                post("/invite") {
+                    institutionMembersProvider.attach(
+                        id = UserAccountId(call.receiveValidated<ManageInstituteMember>().id),
+                        toInstitutionId = call.institutionId()
+                    )
 
-            /**
-             * Remove user from the institute.
-             */
-            post("/remove") {
-                institutionMembersProvider.detach(
-                    id = UserAccountId(call.receiveValidated<ManageInstituteMember>().id)
-                )
+                    call.respondSuccess()
+                }
 
-                call.respondSuccess()
+                //TODO doesn't this need to be behind a role?
+                /**
+                 * Remove user from the institute.
+                 */
+                post("/remove") {
+                    institutionMembersProvider.detach(
+                        id = UserAccountId(call.receiveValidated<ManageInstituteMember>().id)
+                    )
+
+                    call.respondSuccess()
+                }
             }
         }
     }

@@ -56,7 +56,7 @@ fun ApplicationCall.imageId(): UUID = try {
  * @throws [IncorrectRequestParameters]
  */
 fun ApplicationCall.coordinatorType(): CoordinatorType = try {
-    CoordinatorType.valueOf(receiveFromParameters("coordinatorType").toUpperCase())
+    CoordinatorType.valueOf(receiveFromParameters("coordinatorType").uppercase())
 } catch (e: Exception) {
     throw IncorrectRequestParameters.create(
         field = "imageId",

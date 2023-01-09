@@ -29,12 +29,12 @@ interface UserAccountFinder {
      * @throws [KeycloakExceptions.UserNotExists]
      * @throws [IllegalStateException]
      */
-    suspend fun find(query: String, offset: Int, limit: Int): Flow<UserAccount>
+    fun find(query: String, offset: Int, limit: Int): Flow<UserAccount>
 
     /**
      * @throws [StorageException.InteractingFailed]
      */
-    suspend fun findWithCriteria(code: CriteriaBuilder.() -> Unit): Flow<UserAccount>
+    fun findWithCriteria(code: CriteriaBuilder.() -> Unit): Flow<UserAccount>
 }
 
 class KeycloakUserAccountFinder(
@@ -43,7 +43,7 @@ class KeycloakUserAccountFinder(
     private val sqlClient: SqlClient
 ) : UserAccountFinder {
 
-    override suspend fun find(query: String, offset: Int, limit: Int): Flow<UserAccount> = flow {
+    override fun find(query: String, offset: Int, limit: Int): Flow<UserAccount> = flow {
         keycloakClient.findUsers(
             realm = keycloakRealm,
             query = query,
@@ -60,7 +60,7 @@ class KeycloakUserAccountFinder(
         }
     )?.hydrate()
 
-    override suspend fun findWithCriteria(code: CriteriaBuilder.() -> Unit): Flow<UserAccount> = sqlClient.fetchAll(
+    override fun findWithCriteria(code: CriteriaBuilder.() -> Unit): Flow<UserAccount> = sqlClient.fetchAll(
         select("accounts") {
             where(code)
         }

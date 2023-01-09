@@ -44,7 +44,7 @@ val elvisModule = module {
     single {
         StorageConfiguration(
             host = getProperty("DATABASE_HOST", "localhost"),
-            port = getPropertyOrNull<Int>("DATABASE_PORT")?.toInt() ?: 5432,
+            port = getPropertyOrNull<String>("DATABASE_PORT")?.toInt() ?: 5432,
             database = getProperty("DATABASE_NAME"),
             username = getProperty("DATABASE_USERNAME"),
             password = getProperty("DATABASE_PASSWORD")
@@ -69,7 +69,7 @@ val elvisModule = module {
         }
 
         val poolOptions = PoolOptions().apply {
-            maxSize = getPropertyOrNull<Int>("DATABASE_POOL_SIZE")?.toInt() ?: 5
+            maxSize = getPropertyOrNull<String>("DATABASE_POOL_SIZE")?.toInt() ?: 5
         }
 
         PgPool.pool(connectionOptions, poolOptions)
@@ -121,11 +121,11 @@ val elvisModule = module {
         VertexMailer(
             config = MailerConfig.Smtp(
                 host = getPropertyOrNull("MAILER_SMTP_HOSTNAME"),
-                port = getPropertyOrNull<Int>("MAILER_SMTP_PORT")?.toInt(),
+                port = getPropertyOrNull<String>("MAILER_SMTP_PORT")?.toInt(),
                 ssl = getPropertyOrNull<String>("MAILER_SMTP_SSL")?.toBoolean() ?: false,
                 username = getPropertyOrNull("MAILER_SMTP_USERNAME"),
                 password = getPropertyOrNull("MAILER_SMTP_PASSWORD"),
-                starttls = getPropertyOrNull<Boolean>("MAILER_SMTP_TLS")?.let { true } ?: false
+                starttls = getPropertyOrNull<String>("MAILER_SMTP_TLS")?.let { true } ?: false
             ),
             templateOptions = get()
         )

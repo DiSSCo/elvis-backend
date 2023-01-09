@@ -15,7 +15,7 @@ interface CallRequestCommentsFinder {
     /**
      * @throws [StorageException.InteractingFailed]
      */
-    suspend fun findAll(id: CallRequestId): Flow<Comment>
+    fun findAll(id: CallRequestId): Flow<Comment>
 }
 
 class ProxyCallRequestCommentsFinder(
@@ -24,7 +24,7 @@ class ProxyCallRequestCommentsFinder(
 
     override suspend fun find(id: CallRequestId): CommentThread? = finder.find(id.asThread())
 
-    override suspend fun findAll(id: CallRequestId): Flow<Comment> = finder.findAll(id.asThread())
+    override fun findAll(id: CallRequestId): Flow<Comment> = finder.findAll(id.asThread())
 
     private fun CallRequestId.asThread() = CommentThreadId(uuid)
 }

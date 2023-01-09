@@ -5,7 +5,7 @@ import io.vertx.sqlclient.SqlClient
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.synthesis.account.UserAccountId
-import org.synthesis.infrastructure.persistence.*
+import org.synthesis.infrastructure.persistence.StorageException
 import org.synthesis.infrastructure.persistence.querybuilder.fetchAll
 import org.synthesis.infrastructure.persistence.querybuilder.fetchOne
 import org.synthesis.infrastructure.persistence.querybuilder.select
@@ -22,73 +22,68 @@ interface CoordinatorAllocator {
     /**
      * @throws [StorageException.InteractingFailed]
      */
-    suspend fun allocate(institutionId: InstitutionId, accessType: CoordinatorType): CoordinatorData?
+    suspend fun allocate(
+        institutionId: InstitutionId,
+        accessType: CoordinatorType
+    ): CoordinatorData?
 
     /**
      * @throws [StorageException.InteractingFailed]
      */
-    suspend fun all(institutionId: InstitutionId): Flow<CoordinatorData>
+    fun all(institutionId: InstitutionId): Flow<CoordinatorData>
 }
 
 class PostgresCoordinatorAllocator(
     private val sqlClient: SqlClient
 ) : CoordinatorAllocator {
+    private val columns = listOf(
+        "ic.user_id as user_id",
+        "ic.institution_id as institution_id",
+        "ic.access as access",
+        "a.email as email",
+        "a.first_name as first_name",
+        "a.last_name as last_name"
+    )
+    private val institutionsCoordinators = "institutions_coordinators ic"
+    private val account = "accounts a"
 
     override suspend fun find(id: UserAccountId): CoordinatorData? = sqlClient.fetchOne(
         select(
-            from = "institutions_coordinators ic",
-            columns = listOf(
-                "ic.user_id as user_id",
-                "ic.institution_id as institution_id",
-                "ic.access as access",
-                "a.email as email",
-                "a.first_name as first_name",
-                "a.last_name as last_name"
-            )
+            from = institutionsCoordinators,
+            columns = columns
         ) {
-            "accounts a" innerJoin "ic.user_id = a.id"
+            account innerJoin "ic.user_id = a.id"
 
             where { "ic.user_id" eq id.uuid }
         }
     )?.hydrate()
 
-    override suspend fun allocate(institutionId: InstitutionId, accessType: CoordinatorType): CoordinatorData? =
+    override suspend fun allocate(
+        institutionId: InstitutionId,
+        accessType: CoordinatorType
+    ): CoordinatorData? =
         sqlClient.fetchOne(
             select(
-                from = "institutions_coordinators ic",
-                columns = listOf(
-                    "ic.user_id as user_id",
-                    "ic.institution_id as institution_id",
-                    "ic.access as access",
-                    "a.email as email",
-                    "a.first_name as first_name",
-                    "a.last_name as last_name"
-                )
+                from = institutionsCoordinators,
+                columns = columns
             ) {
-                "accounts a" innerJoin "ic.user_id = a.id"
+                account innerJoin "ic.user_id = a.id"
                 limit = 1
 
                 where {
                     "ic.institution_id" eq institutionId.grid.value
-                    "ic.access" eq accessType.name.toLowerCase()
+                    "ic.access" eq accessType.name.lowercase()
                 }
             }
         )?.hydrate()
 
-    override suspend fun all(institutionId: InstitutionId): Flow<CoordinatorData> = sqlClient.fetchAll(
+    override fun all(institutionId: InstitutionId): Flow<CoordinatorData> = sqlClient.fetchAll(
         select(
-            from = "institutions_coordinators ic",
-            columns = listOf(
-                "ic.user_id as user_id",
-                "ic.institution_id as institution_id",
-                "ic.access as access",
-                "a.email as email",
-                "a.first_name as first_name",
-                "a.last_name as last_name"
-            )
+            from = institutionsCoordinators,
+            columns = columns
         ) {
 
-            "accounts a" innerJoin "ic.user_id = a.id"
+            account innerJoin "ic.user_id = a.id"
 
             where { "ic.institution_id" eq institutionId.grid.value }
         }

@@ -8,16 +8,16 @@ import org.synthesis.infrastructure.persistence.querybuilder.fetchAll
 import org.synthesis.infrastructure.persistence.querybuilder.select
 
 interface ReportingReceiver {
-    suspend fun getReportingByRequests(callId: ReportingParameter, type: ReportingParameter, group: ReportingParameter): Flow<FormatOne>
-    suspend fun getReportingByCountry(callId: ReportingParameter, group: ReportingParameter): Flow<FormatTwo>
-    suspend fun getReportingByRequesters(callId: ReportingParameter, type: ReportingParameter): Flow<FormatThree>
-    suspend fun getReportingByRole(role: ReportingParameter): Flow<FormatFour>
+    fun getReportingByRequests(callId: ReportingParameter, type: ReportingParameter, group: ReportingParameter): Flow<FormatOne>
+    fun getReportingByCountry(callId: ReportingParameter, group: ReportingParameter): Flow<FormatTwo>
+    fun getReportingByRequesters(callId: ReportingParameter, type: ReportingParameter): Flow<FormatThree>
+    fun getReportingByRole(role: ReportingParameter): Flow<FormatFour>
 }
 
 class PgReportingReceiver(
     private val sqlClient: SqlClient
 ) : ReportingReceiver {
-    override suspend fun getReportingByRequests(
+    override fun getReportingByRequests(
         callId: ReportingParameter,
         type: ReportingParameter,
         group: ReportingParameter
@@ -50,7 +50,7 @@ class PgReportingReceiver(
         return data
     }
 
-    override suspend fun getReportingByCountry(callId: ReportingParameter, group: ReportingParameter): Flow<FormatTwo> {
+    override fun getReportingByCountry(callId: ReportingParameter, group: ReportingParameter): Flow<FormatTwo> {
         val query = select(
             from = "accounts as a",
             columns = listOf(
@@ -77,7 +77,7 @@ class PgReportingReceiver(
         return data
     }
 
-    override suspend fun getReportingByRequesters(callId: ReportingParameter, type: ReportingParameter): Flow<FormatThree> {
+    override fun getReportingByRequesters(callId: ReportingParameter, type: ReportingParameter): Flow<FormatThree> {
         val query = select(
             from = "accounts as a",
             columns = listOf(
@@ -101,7 +101,7 @@ class PgReportingReceiver(
         return data
     }
 
-    override suspend fun getReportingByRole(role: ReportingParameter): Flow<FormatFour> {
+    override fun getReportingByRole(role: ReportingParameter): Flow<FormatFour> {
         val query = select(
             from = "accounts as a",
             columns = listOf(

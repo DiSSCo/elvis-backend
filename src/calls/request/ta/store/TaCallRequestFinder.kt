@@ -61,7 +61,7 @@ class TaCallRequestFinder(
         return callRequestRow.hydrate(institutionFormCollection.toList())
     }
 
-    private suspend fun findScoringForms(id: CallRequestId) = sqlClient.fetchAll(
+    private fun findScoringForms(id: CallRequestId) = sqlClient.fetchAll(
         select(
             from = "scoring_form as sf",
             columns = listOf(

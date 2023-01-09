@@ -1,10 +1,11 @@
 package org.synthesis.infrastructure
 
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 import org.synthesis.account.UserFullName
-import org.synthesis.auth.interceptor.withRole
+import org.synthesis.auth.ktor.withRole
 import org.synthesis.infrastructure.ktor.receiveFromParameters
 import org.synthesis.infrastructure.ktor.respondSuccess
 import org.synthesis.infrastructure.mailer.MailEnvelope
@@ -15,7 +16,8 @@ fun Route.infrastructure() {
 
     val mailer by inject<Mailer>()
 
-    withRole("settings_edit") {
+    authenticate {
+        withRole("settings_edit") {}
 
         post("/debug/mailer/{email}") {
             val result = mailer.send(

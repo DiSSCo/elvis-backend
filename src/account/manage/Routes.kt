@@ -1,26 +1,28 @@
 package org.synthesis.account.manage
 
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.routing.*
-import java.time.LocalDate
 import kotlinx.coroutines.flow.toList
 import org.koin.ktor.ext.inject
 import org.synthesis.account.*
 import org.synthesis.account.registration.UserAccountRegistrationCredentials
-import org.synthesis.auth.interceptor.withRole
+import org.synthesis.auth.ktor.withRole
 import org.synthesis.infrastructure.IncorrectRequestParameters
 import org.synthesis.infrastructure.ktor.receiveValidated
 import org.synthesis.infrastructure.ktor.respondCollection
 import org.synthesis.infrastructure.ktor.respondCreated
 import org.synthesis.infrastructure.ktor.respondSuccess
 import org.synthesis.institution.InstitutionId
+import java.time.LocalDate
 
 fun Route.userManageRoutes() {
     val userAccountProvider by inject<UserAccountProvider>()
     val userAccountFinder by inject<UserAccountFinder>()
 
     route("/users") {
-        withRole("manage_users") {
+        authenticate {
+            withRole("manage_users") {}
 
             /**
              * Getting a list of users
@@ -51,13 +53,17 @@ fun Route.userManageRoutes() {
                             fullName = command.fullName,
                             attributes = UserAccountAttributes(
                                 orcId = command.attributes.orcId?.let { OrcId(it) },
-                                institutionId = command.attributes.institutionId?.let { InstitutionId.fromString(it) },
+                                institutionId = command.attributes.institutionId?.let {
+                                    InstitutionId.fromString(
+                                        it
+                                    )
+                                },
                                 relatedInstitutionId = command.attributes.relatedInstitutionId?.let {
                                     InstitutionId.fromString(
                                         it
                                     )
                                 },
-                                gender = command.attributes.gender?.let { Gender.valueOf(it.toUpperCase()) }
+                                gender = command.attributes.gender?.let { Gender.valueOf(it.uppercase()) }
                                     ?: Gender.OTHER,
                                 birthDate = command.attributes.birthDate?.let { LocalDate.parse(it) },
                                 nationality = command.attributes.nationality,
@@ -69,7 +75,10 @@ fun Route.userManageRoutes() {
 
                     call.respondCreated("User successful registered", mapOf("id" to accountId.uuid))
                 } catch (e: UserAccountException.AlreadyRegistered) {
-                    throw IncorrectRequestParameters.create("email", e.message ?: "User already exists")
+                    throw IncorrectRequestParameters.create(
+                        "email",
+                        e.message ?: "User already exists"
+                    )
                 }
             }
 

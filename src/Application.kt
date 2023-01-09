@@ -5,6 +5,7 @@ import io.ktor.http.*
 import io.ktor.serialization.jackson.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
 import io.ktor.server.locations.*
 import io.ktor.server.plugins.callloging.*
 import io.ktor.server.plugins.contentnegotiation.*
@@ -13,16 +14,16 @@ import io.ktor.server.plugins.dataconversion.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import org.koin.ktor.ext.inject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.slf4j.event.*
+import org.synthesis.account.UserAccount
 import org.synthesis.account.manage.userManageRoutes
 import org.synthesis.account.profileRoutes
 import org.synthesis.account.registration.registrationRoutes
 import org.synthesis.auth.AuthException
 import org.synthesis.auth.authRoutes
-import org.synthesis.auth.ktor.KtorAuthConfigurer
+import org.synthesis.auth.ktor.*
 import org.synthesis.calls.callRoutes
 import org.synthesis.contact.contactRoutes
 import org.synthesis.country.countryRoutes
@@ -39,14 +40,9 @@ import org.synthesis.settings.settingsRoutes
 @Suppress("LongMethod")
 fun Application.module() {
 
-    val authConfigurer by inject<KtorAuthConfigurer>()
-    val logger: Logger = LoggerFactory.getLogger("app")
+     val logger: Logger = LoggerFactory.getLogger("app")
 
-    install(Authentication) {
-        with(authConfigurer) {
-            configure()
-        }
-    }
+    configureSecurity()
 
     install(CORS) {
         anyHost()
@@ -98,6 +94,12 @@ fun Application.module() {
     install(ContentNegotiation) {
         jackson {
             registerModule(JavaTimeModule())
+        }
+    }
+
+    installRoleBasedAuthPlugin {
+        extractRoles { principal ->
+            (principal as UserAccount).roles.toSet()
         }
     }
 

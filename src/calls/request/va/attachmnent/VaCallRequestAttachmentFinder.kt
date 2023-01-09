@@ -24,12 +24,12 @@ interface VaCallRequestAttachmentFinder {
     /**
      * @throws [StorageException.InteractingFailed]
      */
-    suspend fun findAll(callRequestId: CallRequestId, institutionId: InstitutionId): Flow<VaCallRequestAttachment>
+    fun findAll(callRequestId: CallRequestId, institutionId: InstitutionId): Flow<VaCallRequestAttachment>
 
     /**
      * @throws [StorageException.InteractingFailed]
      */
-    suspend fun findAll(callRequestId: CallRequestId): Flow<VaCallRequestAttachment>
+    fun findAll(callRequestId: CallRequestId): Flow<VaCallRequestAttachment>
 }
 
 class DefaultVaCallRequestAttachmentFinder(
@@ -48,7 +48,7 @@ class DefaultVaCallRequestAttachmentFinder(
         return sqlClient.fetchOne(query)?.hydrate()
     }
 
-    override suspend fun findAll(
+    override fun findAll(
         callRequestId: CallRequestId,
         institutionId: InstitutionId
     ): Flow<VaCallRequestAttachment> {
@@ -63,7 +63,7 @@ class DefaultVaCallRequestAttachmentFinder(
         return sqlClient.fetchAll(query).map { it.hydrate() }
     }
 
-    override suspend fun findAll(callRequestId: CallRequestId): Flow<VaCallRequestAttachment> {
+    override fun findAll(callRequestId: CallRequestId): Flow<VaCallRequestAttachment> {
         val query = select("requests_attachments AS cra", listOf("cra.*", "a.*")) {
             "attachments AS a" innerJoin "cra.stored_file_id = a.id"
             where {

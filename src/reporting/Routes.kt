@@ -1,19 +1,22 @@
 package org.synthesis.reporting
 
-import io.ktor.server.application.call
 import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.flow.toList
 import org.koin.ktor.ext.inject
-import org.synthesis.auth.interceptor.withRole
+import org.synthesis.auth.ktor.withRole
 
 @Suppress("LongMethod")
 fun Route.reportingRoutes() {
     val presenter by inject<ReportingPresenter>()
-    withRole("reporting_view") {
+    authenticate {
+        withRole("reporting_view") {}
         get("/reporting/requests/{callId}/{type}/{group}") {
-            val result = presenter.getReportingByRequests(call.callId(), call.type(), call.group()).toList()
+            val result =
+                presenter.getReportingByRequests(call.callId(), call.type(), call.group()).toList()
             call.respond(HttpStatusCode.OK, result)
         }
 

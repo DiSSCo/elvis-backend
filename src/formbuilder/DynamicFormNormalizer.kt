@@ -37,6 +37,6 @@ fun DynamicForm.normalize(): Map<String, Any> {
 }
 
 private fun FieldWithValue.asView() = FacilityFieldValueResponse(
-    type = type.toString().toLowerCase(),
+    type = type.toString().lowercase(),
     value = clearValue()
 )

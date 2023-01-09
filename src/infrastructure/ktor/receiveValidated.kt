@@ -20,14 +20,13 @@ suspend fun <T : Any> ApplicationCall.receiveValidated(type: KClass<T>): T {
     val structure = receive(type)
     val violations = validator.validate(structure)
 
-    if (violations.count() > 0) {
+    if (violations.isNotEmpty()) {
         throw IncorrectRequestParameters(
             violations.map {
                 it.propertyPath.toString() to it.message.toString()
             }.toMap()
         )
     }
-
     return structure
 }
 

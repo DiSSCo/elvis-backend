@@ -1,11 +1,12 @@
 package org.synthesis.country
 
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.flow.toList
 import org.koin.ktor.ext.inject
 import org.synthesis.account.manage.userAccountId
-import org.synthesis.auth.interceptor.withRole
+import org.synthesis.auth.ktor.withRole
 import org.synthesis.infrastructure.IncorrectRequestParameters
 import org.synthesis.infrastructure.ktor.receiveFromParameters
 import org.synthesis.infrastructure.ktor.respondCollection
@@ -28,27 +29,30 @@ fun Route.countryRoutes() {
             throw IncorrectRequestParameters.create("action", "Incorrect action provided")
         }
 
-        /**
-         * TA Scorers list.
-         */
-        withRole("scorer_manage") {
+        authenticate {
+            withRole("scorer_manage") {}
+            /**
+             * TA Scorers list.
+             */
             get("/ta_scorer") {
                 call.respondCollection(countryManager.taScorers(call.countryCode()).toList())
             }
-        }
 
-        /**
-         * Manage TA Scorers (promote/demote)
-         */
-        withRole("scorer_manage") {
+
+            /**
+             * Manage TA Scorers (promote/demote)
+             */
+
             post("/ta_scorer/{action}/{userAccountId}") {
                 val userAccountId = call.userAccountId()
                 val currencyCode = call.countryCode()
 
                 when (call.extractAction()) {
-                    "add" -> countryManager.promote(userAccountId, "ta scorer", currencyCode).also {
-                        call.respondSuccess("User :$userAccountId Promoted")
-                    }
+                    "add" -> countryManager.promote(userAccountId, "ta scorer", currencyCode)
+                        .also {
+                            call.respondSuccess("User :$userAccountId Promoted")
+                        }
+
                     "remove" -> countryManager.demote(userAccountId, "ta scorer").also {
                         call.respondSuccess("User :$userAccountId Demoted")
                     }
@@ -56,19 +60,20 @@ fun Route.countryRoutes() {
             }
         }
 
-        /**
-         * TAF Admins list.
-         */
-        withRole("taf_admin_manage") {
+
+        authenticate {
+            withRole("taf_admin_manage") {}
+
+            /**
+             * TAF Admins list.
+             */
             get("/taf_admin") {
                 call.respondCollection(countryManager.tafAdmins(call.countryCode()).toList())
             }
-        }
 
-        /**
-         * Manage TAF Admins (promote/demote)
-         */
-        withRole("taf_admin_manage") {
+            /**
+             * Manage TAF Admins (promote/demote)
+             */
             post("/taf_admin/{action}/{userAccountId}") {
                 val userAccountId = call.userAccountId()
                 val currencyCode = call.countryCode()
