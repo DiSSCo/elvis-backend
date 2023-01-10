@@ -46,13 +46,14 @@ class PostgresCoordinatorAllocator(
     )
     private val institutionsCoordinators = "institutions_coordinators ic"
     private val account = "accounts a"
+    private val idMapping = "ic.user_id = a.id"
 
     override suspend fun find(id: UserAccountId): CoordinatorData? = sqlClient.fetchOne(
         select(
             from = institutionsCoordinators,
             columns = columns
         ) {
-            account innerJoin "ic.user_id = a.id"
+            account innerJoin idMapping
 
             where { "ic.user_id" eq id.uuid }
         }
@@ -67,7 +68,7 @@ class PostgresCoordinatorAllocator(
                 from = institutionsCoordinators,
                 columns = columns
             ) {
-                account innerJoin "ic.user_id = a.id"
+                account innerJoin idMapping
                 limit = 1
 
                 where {
@@ -83,7 +84,7 @@ class PostgresCoordinatorAllocator(
             columns = columns
         ) {
 
-            account innerJoin "ic.user_id = a.id"
+            account innerJoin idMapping
 
             where { "ic.institution_id" eq institutionId.grid.value }
         }

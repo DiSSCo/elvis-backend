@@ -17,13 +17,21 @@ interface ReportingReceiver {
 class PgReportingReceiver(
     private val sqlClient: SqlClient
 ) : ReportingReceiver {
+    private val requestTable = "requests r"
+    private val callIdMapping = "r.call_id = c.id"
+    private val requesterIdMapping = "r.requester_id = a.id"
+    private val accountTable = "accounts a"
+    private val callsTable = "calls c"
+    private val requesterName = "CONCAT(first_name,' ',last_name) as requester_name"
+    private val groupList = "array_to_string(group_list, ',', '*')"
+
     override fun getReportingByRequests(
         callId: ReportingParameter,
         type: ReportingParameter,
         group: ReportingParameter
     ): Flow<FormatOne> {
         val query = select(
-            from = "calls as c",
+            from = callsTable,
             columns = listOf(
                 "a.${group.group} as requester_country",
                 "COUNT(*) as rows",
@@ -39,8 +47,8 @@ class PgReportingReceiver(
                 "r.status" eq type.type
             }
             groupBy("a.${group.group}")
-            "requests r" leftJoin "r.call_id = c.id"
-            "accounts a" leftJoin "r.requester_id = a.id"
+            requestTable leftJoin callIdMapping
+            accountTable leftJoin requesterIdMapping
             "a.${group.group}" orderBy "ASC"
         }
 
@@ -52,9 +60,9 @@ class PgReportingReceiver(
 
     override fun getReportingByCountry(callId: ReportingParameter, group: ReportingParameter): Flow<FormatTwo> {
         val query = select(
-            from = "accounts as a",
+            from = accountTable,
             columns = listOf(
-                "CONCAT(first_name,' ',last_name) as requester_name",
+                requesterName,
                 "email",
                 "r.title as request_title",
                 "i.title as institution_title",
@@ -65,8 +73,8 @@ class PgReportingReceiver(
                 "c.id" eq callId.callId
                 "a.country_code" eq "${group.group}"
             }
-            "requests r" leftJoin "r.requester_id = a.id"
-            "calls c" leftJoin "r.call_id = c.id"
+            requestTable leftJoin requesterIdMapping
+            callsTable leftJoin callIdMapping
             "institutions i" leftJoin "a.institution_id = i.id"
             "requester_name" orderBy "ASC"
         }
@@ -79,19 +87,19 @@ class PgReportingReceiver(
 
     override fun getReportingByRequesters(callId: ReportingParameter, type: ReportingParameter): Flow<FormatThree> {
         val query = select(
-            from = "accounts as a",
+            from = accountTable,
             columns = listOf(
-                "CONCAT(first_name,' ',last_name) as requester_name",
+                requesterName,
                 "email",
                 "INITCAP(gender) as gender"
             )
         ) {
             where {
                 "c.id" eq callId.callId
-                "array_to_string(group_list, ',', '*')" lLike "${type.type}"
+                groupList lLike "${type.type}"
             }
-            "requests r" leftJoin "r.requester_id = a.id"
-            "calls c" leftJoin "r.call_id = c.id"
+            requestTable leftJoin requesterIdMapping
+            callsTable leftJoin callIdMapping
             "requester_name" orderBy "ASC"
         }
 
@@ -103,18 +111,18 @@ class PgReportingReceiver(
 
     override fun getReportingByRole(role: ReportingParameter): Flow<FormatFour> {
         val query = select(
-            from = "accounts as a",
+            from = accountTable,
             columns = listOf(
-                "CONCAT(first_name,' ',last_name) as requester_name",
-                "array_to_string(group_list, ',', '*')",
+                requesterName,
+                groupList,
                 "INITCAP(gender) as gender"
             )
         ) {
             where {
-                "array_to_string(group_list, ',', '*')" lLike "${role.role}"
+                groupList lLike "${role.role}"
             }
-            "requests r" leftJoin "r.requester_id = a.id"
-            "calls c" leftJoin "r.call_id = c.id"
+            requestTable leftJoin requesterIdMapping
+            callsTable leftJoin callIdMapping
             "requester_name" orderBy "ASC"
         }
 

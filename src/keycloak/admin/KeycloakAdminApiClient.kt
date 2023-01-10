@@ -1,5 +1,6 @@
 package org.synthesis.keycloak.admin
 
+import kotlinx.coroutines.CoroutineDispatcher
 import java.util.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -88,7 +89,8 @@ interface KeycloakAdminApiClient {
 
 class DefaultKeycloakAdminApiClient(
     private val configuration: KeycloakConfiguration,
-    private val logger: Logger
+    private val logger: Logger,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) : KeycloakAdminApiClient {
 
     private val adminClient: Keycloak by lazy {
@@ -197,14 +199,14 @@ class DefaultKeycloakAdminApiClient(
     /**
      * Add user to group.
      */
-    private suspend fun UserResource.addGroup(keycloakGroup: String) = withContext(Dispatchers.IO) {
+    private suspend fun UserResource.addGroup(keycloakGroup: String) = withContext(dispatcher) {
         joinGroup(keycloakGroup)
     }
 
     /**
      * Remove user from group.
      */
-    private suspend fun UserResource.removeGroup(keycloakGroup: String) = withContext(Dispatchers.IO) {
+    private suspend fun UserResource.removeGroup(keycloakGroup: String) = withContext(dispatcher) {
         leaveGroup(keycloakGroup)
     }
 
@@ -213,7 +215,7 @@ class DefaultKeycloakAdminApiClient(
      * Since the user resource does not contain a link to the realm, we will create a proxy class and wrap the
      * users resource in it.
      */
-    private suspend fun users(inRealm: KeycloakRealm) = withContext(Dispatchers.IO) {
+    private suspend fun users(inRealm: KeycloakRealm) = withContext(dispatcher) {
         WrappedUsersResource(
             resource = realm(inRealm).users(),
             context = inRealm
@@ -223,7 +225,7 @@ class DefaultKeycloakAdminApiClient(
     /**
      * Search for a user by Email.
      */
-    private suspend fun WrappedUsersResource.findOne(email: String) = withContext(Dispatchers.IO) {
+    private suspend fun WrappedUsersResource.findOne(email: String) = withContext(dispatcher) {
         resource.search(email)
             .firstOrNull()
             ?.applicationUser(context)
@@ -232,7 +234,7 @@ class DefaultKeycloakAdminApiClient(
     /**
      * Search for a user by ID.
      */
-    private suspend fun WrappedUsersResource.findOne(id: UserAccountId) = withContext(Dispatchers.IO) {
+    private suspend fun WrappedUsersResource.findOne(id: UserAccountId) = withContext(dispatcher) {
         resource.get(id.uuid.toString())
     }
 
@@ -240,7 +242,7 @@ class DefaultKeycloakAdminApiClient(
      * Search for users with the specified query (A String contained in username, first or last name, or email).
      */
     private suspend fun WrappedUsersResource.findAll(query: String?, offset: Int, limit: Int) =
-        withContext(Dispatchers.IO) {
+        withContext(dispatcher) {
             val count = async {
                 resource.count(query)
             }
@@ -258,7 +260,7 @@ class DefaultKeycloakAdminApiClient(
     /**
      * Adding a new user.
      */
-    private suspend fun WrappedUsersResource.add(user: UserRepresentation) = withContext(Dispatchers.IO) {
+    private suspend fun WrappedUsersResource.add(user: UserRepresentation) = withContext(dispatcher) {
         val response = resource.create(user)
 
         UserAccountId(
@@ -271,7 +273,7 @@ class DefaultKeycloakAdminApiClient(
     /**
      * Update existing user.
      */
-    private suspend fun UserResource.save(user: UserRepresentation) = withContext(Dispatchers.IO) {
+    private suspend fun UserResource.save(user: UserRepresentation) = withContext(dispatcher) {
         update(user)
     }
 
@@ -324,7 +326,7 @@ class DefaultKeycloakAdminApiClient(
     /**
      * Getting the resource of the current realm.
      */
-    private suspend fun realm(id: KeycloakRealm) = withContext(Dispatchers.IO) { adminClient.realm(id.value) }
+    private suspend fun realm(id: KeycloakRealm) = withContext(dispatcher) { adminClient.realm(id.value) }
 
     /**
      * @throws [KeycloakExceptions.OperationFailed]

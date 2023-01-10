@@ -83,6 +83,8 @@ fun Route.callRoutes() {
     val callRequestCommentsHandler by inject<CallRequestCommentsHandler>()
     val callRequestCommentsPresenter by inject<CallRequestCommentsPresenter>()
 
+    val notFoundMessage = "Request not found"
+
     route("/calls") {
         authenticate {
             withRole("call_create") {}
@@ -177,7 +179,7 @@ fun Route.callRoutes() {
                             val request = vaCallRequestPresenter.find(call.callRequestId())
                                 ?: throw IncorrectRequestParameters.create(
                                     "requestId",
-                                    "Request not found"
+                                    notFoundMessage
                                 )
 
                             call.respond(request)
@@ -187,7 +189,7 @@ fun Route.callRoutes() {
                             val request = taCallRequestPresenter.find(call.callRequestId())
                                 ?: throw IncorrectRequestParameters.create(
                                     "requestId",
-                                    "Request not found"
+                                    notFoundMessage
                                 )
 
                             call.respond(request)
@@ -196,6 +198,18 @@ fun Route.callRoutes() {
                         else -> error("Unknown type")
                     }
                 }
+
+                /**
+                 * Receive information about CallRequest.
+                 *
+                 */
+                get("/coordinator") {
+                    val request = vaCallRequestPresenter.find(call.callRequestId())
+                        ?: throw IncorrectRequestParameters.create("requestId", notFoundMessage)
+
+                    call.respond(request)
+                }
+
             }
 
             authenticate {

@@ -15,6 +15,7 @@ class TaCallRequestStore(
     private val sqlClient: PgPool,
     private val serializer: Serializer = JacksonSerializer
 ) : CallRequestStore<TaCallRequest> {
+    private val transnationalAccess = "Transnational Access"
     override suspend fun add(request: TaCallRequest) {
         sqlClient.execute(
             insert(
@@ -29,7 +30,7 @@ class TaCallRequestStore(
                     "title" to request.title(),
                     "deleted_at" to request.deletedAt(),
                     "resource_id" to request.resourceId()?.id,
-                    "type" to "Transnational Access"
+                    "type" to transnationalAccess
                 )
             )
         )
@@ -94,7 +95,7 @@ class TaCallRequestStore(
                             "form" to serializedInstituteForm,
                             "status" to institutionForm.status().name.lowercase(),
                             "deleted_at" to institutionForm.deletedAt(),
-                            "type" to "Transnational Access"
+                            "type" to transnationalAccess
                         )
                     ) {
                         onConflict(
@@ -125,7 +126,7 @@ class TaCallRequestStore(
                 ) {
                     where {
                         "institution_id" eq institutionId.grid.value
-                        "type" eq "Transnational Access"
+                        "type" eq transnationalAccess
                     }
                 }
             )

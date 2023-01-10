@@ -15,6 +15,7 @@ class VaCallRequestStore(
     private val sqlClient: PgPool,
     private val serializer: Serializer = JacksonSerializer
 ) : CallRequestStore<VaCallRequest> {
+    private val virtualAccess = "Virtual Access"
 
     override suspend fun add(request: VaCallRequest) {
         sqlClient.execute(
@@ -30,7 +31,7 @@ class VaCallRequestStore(
                     "title" to request.title(),
                     "deleted_at" to request.deletedAt(),
                     "resource_id" to request.resourceId()?.id,
-                    "type" to "Virtual Access"
+                    "type" to virtualAccess
                 )
             )
         )
@@ -67,7 +68,7 @@ class VaCallRequestStore(
                             "form" to serializedInstituteForm,
                             "status" to institutionForm.status().name.lowercase(),
                             "deleted_at" to institutionForm.deletedAt(),
-                            "type" to "Virtual Access"
+                            "type" to virtualAccess
                         )
                     ) {
                         onConflict(
@@ -98,7 +99,7 @@ class VaCallRequestStore(
                 ) {
                     where {
                         "institution_id" eq institutionId.grid.value
-                        "type" eq "Virtual Access"
+                        "type" eq virtualAccess
                     }
                 }
             )

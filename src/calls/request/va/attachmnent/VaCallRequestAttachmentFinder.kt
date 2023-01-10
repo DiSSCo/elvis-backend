@@ -35,12 +35,16 @@ interface VaCallRequestAttachmentFinder {
 class DefaultVaCallRequestAttachmentFinder(
     private val sqlClient: SqlClient
 ) : VaCallRequestAttachmentFinder {
+    private val requestAttachmentTable = "requests_attachments AS cra"
+    private val attachmentTable = "attachments AS a"
+    private val storedFileIdMapping = "cra.stored_file_id = a.id"
+    private val callRequestIdField = "cra.call_request_id"
 
     override suspend fun find(callRequestId: CallRequestId, attachmentId: AttachmentId): VaCallRequestAttachment? {
-        val query = select("requests_attachments AS cra", listOf("cra.*", "a.*")) {
-            "attachments AS a" innerJoin "cra.stored_file_id = a.id"
+        val query = select(requestAttachmentTable, listOf("cra.*", "a.*")) {
+            attachmentTable innerJoin storedFileIdMapping
             where {
-                "cra.call_request_id" eq callRequestId.uuid
+                callRequestIdField eq callRequestId.uuid
                 "cra.stored_file_id" eq attachmentId.uuid
             }
         }
@@ -52,10 +56,10 @@ class DefaultVaCallRequestAttachmentFinder(
         callRequestId: CallRequestId,
         institutionId: InstitutionId
     ): Flow<VaCallRequestAttachment> {
-        val query = select("requests_attachments AS cra", listOf("cra.*", "a.*")) {
-            "attachments AS a" innerJoin "cra.stored_file_id = a.id"
+        val query = select(requestAttachmentTable, listOf("cra.*", "a.*")) {
+            attachmentTable innerJoin storedFileIdMapping
             where {
-                "cra.call_request_id" eq callRequestId.uuid
+                callRequestIdField eq callRequestId.uuid
                 "cra.institution_id" eq institutionId.grid.value
             }
         }
@@ -64,10 +68,10 @@ class DefaultVaCallRequestAttachmentFinder(
     }
 
     override fun findAll(callRequestId: CallRequestId): Flow<VaCallRequestAttachment> {
-        val query = select("requests_attachments AS cra", listOf("cra.*", "a.*")) {
-            "attachments AS a" innerJoin "cra.stored_file_id = a.id"
+        val query = select(requestAttachmentTable, listOf("cra.*", "a.*")) {
+            attachmentTable innerJoin storedFileIdMapping
             where {
-                "cra.call_request_id" eq callRequestId.uuid
+                callRequestIdField eq callRequestId.uuid
             }
         }
 
