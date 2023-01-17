@@ -17,7 +17,7 @@ class CallProvider(
      */
     suspend fun handle(command: CallCommand.Create): CallId {
 
-        var call = Call(
+        val call = Call(
             id = CallId.next(),
             info = CallInfo(
                 name = command.name,

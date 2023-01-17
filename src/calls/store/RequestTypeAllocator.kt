@@ -19,7 +19,7 @@ class RequestTypeAllocator(
         val type = it.getString("type")
             .replace("Transnational Access", "TA")
             .replace("Virtual Access", "VA")
-            .toUpperCase()
+            .uppercase()
 
         CallType.valueOf(type)
     }

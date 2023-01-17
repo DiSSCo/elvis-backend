@@ -54,7 +54,7 @@ suspend fun SqlClient.fetchOne(compiledQuery: CompiledQuery): Row? = withCatch {
  *
  * @throws [StorageException.InteractingFailed]
  */
-suspend fun SqlClient.fetchAll(compiledQuery: CompiledQuery): Flow<Row> = flow {
+fun SqlClient.fetchAll(compiledQuery: CompiledQuery): Flow<Row> = flow {
     withCatch {
         val preparedQuery = preparedQuery(compiledQuery.sql)
         val resultSet = preparedQuery.execute(Tuple.tuple(compiledQuery.statements)).await()

@@ -36,7 +36,7 @@ class PostgresScorerAllocator(
 
             where {
                 "s.user_id" eq id.uuid
-                "s.country_code" eq countryCode.id.toUpperCase()
+                "s.country_code" eq countryCode.id.uppercase()
             }
         }
     )?.hydrate()

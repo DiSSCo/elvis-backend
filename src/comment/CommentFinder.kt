@@ -25,7 +25,7 @@ interface CommentFinder {
     /**
      * @throws [StorageException.InteractingFailed]
      */
-    suspend fun findAll(inThread: CommentThreadId): Flow<Comment>
+    fun findAll(inThread: CommentThreadId): Flow<Comment>
 }
 
 class PgCommentFinder(
@@ -48,7 +48,7 @@ class PgCommentFinder(
         return sqlClient.fetchOne(query)?.mapThread()
     }
 
-    override suspend fun findAll(inThread: CommentThreadId): Flow<Comment> {
+    override fun findAll(inThread: CommentThreadId): Flow<Comment> {
         val query = select("comments") {
             where { "thread_id" eq inThread.uuid }
 
@@ -74,7 +74,7 @@ class PgCommentFinder(
         authorId = UserAccountId(getUUID("author_id")),
         threadId = CommentThreadId(getUUID("thread_id")),
         payload = CommentPayload(
-            format = CommentFormat.valueOf(getString("format").toUpperCase()),
+            format = CommentFormat.valueOf(getString("format").uppercase()),
             data = getString("message").escapeString()
         ),
         createdAt = getLocalDateTime("created_at"),

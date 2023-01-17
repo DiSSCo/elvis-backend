@@ -15,7 +15,7 @@ fun UserAccountAttributes.toKeycloakRepresentation() = mapOf(
     KeycloakAttribute.orcIdAttributeName to listOf(orcId?.id),
     KeycloakAttribute.institutionAttributeName to listOf(institutionId?.grid?.value),
     KeycloakAttribute.relatedInstitutionAttributeName to listOf(relatedInstitutionId?.grid?.value),
-    KeycloakAttribute.genderAttributeName to listOf(gender.name.toLowerCase()),
+    KeycloakAttribute.genderAttributeName to listOf(gender.name.lowercase()),
     KeycloakAttribute.birthDateAttributeName to listOf(birthDate?.toString()),
     KeycloakAttribute.countryCodeAttributeName to listOf(countryCode?.id),
     KeycloakAttribute.nationalityAttributeName to listOf(nationality),
@@ -43,7 +43,7 @@ fun UserRepresentation.attributes() = UserAccountAttributes(
 fun UserRepresentation.gender(): Gender =
     (attributes ?: mapOf())[KeycloakAttribute.genderAttributeName]
         ?.firstOrNull()
-        ?.let { Gender.valueOf(it.toUpperCase()) }
+        ?.let { Gender.valueOf(it.uppercase()) }
         ?: Gender.OTHER
 
 /**

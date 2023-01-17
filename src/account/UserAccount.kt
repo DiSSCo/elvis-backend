@@ -1,7 +1,7 @@
 package org.synthesis.account
 
 import com.fasterxml.jackson.annotation.JsonValue
-import io.ktor.auth.*
+import io.ktor.server.auth.*
 import java.time.LocalDateTime
 import java.util.*
 

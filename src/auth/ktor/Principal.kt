@@ -16,12 +16,12 @@ import org.synthesis.keycloak.admin.KeycloakUserGroup
  */
 internal fun JWTCredential.principal(realm: KeycloakRealm, client: KeycloakApiClient): UserAccount = UserAccount(
     id = id(),
-    email = payload.getClaim("email").asString(),
+    email = "",
     groups = groups(),
     roles = roles(client),
     fullName = UserFullName(
-        firstName = payload.getClaim("given_name").asString(),
-        lastName = payload.getClaim("family_name").asString()
+        firstName = "",
+        lastName = ""
     ),
     realmId = realm.value,
     attributes = attributes(),
@@ -80,7 +80,7 @@ private fun JWTCredential.orcIdAttribute(): OrcId? = payload
     ?.let { OrcId(it) }
 
 /**
- * Parsing the token and extracting the birth date
+ * Parsing the token and extracting the birthdate
  */
 private fun JWTCredential.birthDateAttribute(): LocalDate? = payload
     .getClaim(KeycloakAttribute.birthDateAttributeName)
@@ -93,7 +93,7 @@ private fun JWTCredential.birthDateAttribute(): LocalDate? = payload
 private fun JWTCredential.genderAttribute(): Gender = payload
     .getClaim(KeycloakAttribute.genderAttributeName)
     ?.asString()
-    ?.let { Gender.valueOf(it.toUpperCase()) }
+    ?.let { Gender.valueOf(it.uppercase()) }
     ?: Gender.OTHER
 
 /**

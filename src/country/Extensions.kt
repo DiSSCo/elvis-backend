@@ -1,6 +1,6 @@
 package org.synthesis.country
 
-import io.ktor.application.*
+import io.ktor.server.application.*
 import org.synthesis.infrastructure.IncorrectRequestParameters
 
 /**
@@ -9,7 +9,7 @@ import org.synthesis.infrastructure.IncorrectRequestParameters
  * @throws [IncorrectRequestParameters]
  */
 fun ApplicationCall.countryCode(): CountryCode = try {
-    CountryCode(parameters["countryIsoCode"]?.toUpperCase() ?: throw Exception())
+    CountryCode(parameters["countryIsoCode"]?.uppercase() ?: throw Exception())
 } catch (e: Exception) {
     throw IncorrectRequestParameters.create(
         field = "countryIsoCode",

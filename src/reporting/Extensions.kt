@@ -1,8 +1,9 @@
 package org.synthesis.reporting
 
-import io.ktor.application.*
+import io.ktor.server.application.*
 import org.synthesis.infrastructure.IncorrectRequestParameters
 
+const val failedFacilityIdMessage = "Failed to retrieve facility id"
 /**
  * Extract reporting call Id from URI
  *
@@ -27,7 +28,7 @@ fun ApplicationCall.type(): ReportingParameter = try {
 } catch (e: Exception) {
     throw IncorrectRequestParameters.create(
         field = "type",
-        message = "Failed to retrieve facility id"
+        message = failedFacilityIdMessage
     )
 }
 
@@ -41,7 +42,7 @@ fun ApplicationCall.group(): ReportingParameter = try {
 } catch (e: Exception) {
     throw IncorrectRequestParameters.create(
         field = "group",
-        message = "Failed to retrieve facility id"
+        message = failedFacilityIdMessage
     )
 }
 
@@ -55,6 +56,6 @@ fun ApplicationCall.role(): ReportingParameter = try {
 } catch (e: Exception) {
     throw IncorrectRequestParameters.create(
         field = "role",
-        message = "Failed to retrieve facility id"
+        message = failedFacilityIdMessage
     )
 }

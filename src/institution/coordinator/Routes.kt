@@ -1,13 +1,14 @@
 package org.synthesis.institution.coordinator
 
-import io.ktor.application.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.routing.*
 import io.ktor.util.pipeline.*
 import kotlinx.coroutines.flow.toList
 import org.koin.ktor.ext.inject
 import org.synthesis.account.manage.userAccountId
 import org.synthesis.auth.interceptor.authenticatedUser
-import org.synthesis.auth.interceptor.withRole
+import org.synthesis.auth.ktor.withRole
 import org.synthesis.infrastructure.IncorrectRequestParameters
 import org.synthesis.infrastructure.ktor.receiveFromParameters
 import org.synthesis.infrastructure.ktor.respondCollection
@@ -61,9 +62,12 @@ fun Route.manageInstitutionRoles() {
         )
     }
 
-    withRole("manage_coordinators") {
 
-        route("/institutions/{institutionId}/{role}") {
+
+    route("/institutions/{institutionId}/{role}") {
+        authenticate {
+
+            withRole("manage_coordinators") {}
 
             /**
              * List of coordinators.

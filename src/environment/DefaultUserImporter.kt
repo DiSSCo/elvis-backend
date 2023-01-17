@@ -11,6 +11,7 @@ import org.synthesis.institution.InstitutionId
 class DefaultUserImporter(
     val registrationHandler: RegistrationHandler
 ) {
+    private val institutionId = InstitutionId.fromString("grid.35937.3b")
     private val users: List<UserAccountRegistrationData> = listOf(
         UserAccountRegistrationData(
             email = "requester@picturae.com",
@@ -22,7 +23,7 @@ class DefaultUserImporter(
             attributes = UserAccountAttributes(
                 orcId = OrcId("0000-0000-0000-0000"),
                 institutionId = null,
-                relatedInstitutionId = InstitutionId.fromString("grid.35937.3b"),
+                relatedInstitutionId = institutionId,
                 gender = Gender.MALE,
                 birthDate = null,
                 nationality = "Belgium",
@@ -57,8 +58,8 @@ class DefaultUserImporter(
             ),
             attributes = UserAccountAttributes(
                 orcId = null,
-                institutionId = InstitutionId.fromString("grid.35937.3b"),
-                relatedInstitutionId = InstitutionId.fromString("grid.35937.3b"),
+                institutionId = institutionId,
+                relatedInstitutionId = institutionId,
                 gender = Gender.MALE,
                 birthDate = null,
                 nationality = null,
@@ -75,8 +76,8 @@ class DefaultUserImporter(
             ),
             attributes = UserAccountAttributes(
                 orcId = null,
-                institutionId = InstitutionId.fromString("grid.35937.3b"),
-                relatedInstitutionId = InstitutionId.fromString("grid.35937.3b"),
+                institutionId = institutionId,
+                relatedInstitutionId = institutionId,
                 gender = Gender.MALE,
                 birthDate = null,
                 nationality = null,
@@ -93,8 +94,8 @@ class DefaultUserImporter(
             ),
             attributes = UserAccountAttributes(
                 orcId = null,
-                institutionId = InstitutionId.fromString("grid.35937.3b"),
-                relatedInstitutionId = InstitutionId.fromString("grid.35937.3b"),
+                institutionId = institutionId,
+                relatedInstitutionId = institutionId,
                 gender = Gender.MALE,
                 birthDate = null,
                 nationality = null,

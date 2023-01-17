@@ -2,7 +2,8 @@ package org.synthesis.environment
 
 import kotlinx.coroutines.runBlocking
 import org.koin.core.Koin
-import org.koin.core.KoinComponent
+import org.koin.core.component.KoinComponent
+
 import org.synthesis.infrastructure.persistence.Migrator
 
 object EnvironmentSetup : KoinComponent {
@@ -31,9 +32,9 @@ object EnvironmentSetup : KoinComponent {
         }
     }
 
-    private fun Koin.stages() = getProperty("APP_ROLE")
+    private fun Koin.stages() = getProperty<String>("APP_ROLE")
         ?.split(" ")
-        ?.map { Stage.valueOf(it.toUpperCase()) }
+        ?.map { Stage.valueOf(it.uppercase()) }
         ?.toSet()
         ?: emptySet()
 }

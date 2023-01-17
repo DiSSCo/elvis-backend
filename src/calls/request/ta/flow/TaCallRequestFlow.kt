@@ -48,7 +48,7 @@ class TaCallRequestFlow(
 
     private val scope = Scope("TaCall Request")
 
-    override suspend fun handle(call: Call, command: CallRequestCommand): Any? = when (command) {
+    override suspend fun handle(call: Call, command: CallRequestCommand): Any = when (command) {
         is CallRequestCommand.CreateRequest -> createRequest(call, command)
         is CallRequestCommand.SetRequestFieldValue -> setRequestFieldValue(command)
         is CallRequestCommand.DeleteFieldGroup -> removeRequestFieldGroup(command)

@@ -21,7 +21,7 @@ class VaCallRequestPresenter(
             VaCallRequestResponse.Institution(
                 id = it.institutionId().grid.value,
                 name = institutionStore.findById(it.institutionId())?.title() ?: "",
-                status = it.status().name.toLowerCase(),
+                status = it.status().name.lowercase(),
                 fieldValues = it.content().mapToFieldValues()
             )
         }
@@ -29,7 +29,7 @@ class VaCallRequestPresenter(
         return VaCallRequestResponse(
             id = id().uuid,
             callId = callId().uuid,
-            status = status().name.toLowerCase(),
+            status = status().name.lowercase(),
             fieldValues = content().general.mapToFieldValues(),
             institutions = institutions,
             creatorData = userAccountFinder.find(UserAccountId(authorId().uuid))?.asVaCallRequesterData()

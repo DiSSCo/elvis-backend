@@ -1,21 +1,19 @@
 package org.synthesis.calls
 
-import io.ktor.application.*
 import io.ktor.http.*
-import io.ktor.response.*
-import io.ktor.routing.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import io.ktor.util.*
 import io.ktor.utils.io.jvm.javaio.*
-import java.io.ByteArrayOutputStream
-import java.util.*
-import java.util.zip.ZipOutputStream
 import org.koin.ktor.ext.inject
 import org.synthesis.attachment.AttachmentId
 import org.synthesis.attachment.AttachmentMetadata
 import org.synthesis.attachment.AttachmentMimeType
 import org.synthesis.attachment.fileNameWithExtension
 import org.synthesis.auth.interceptor.authenticatedUser
-import org.synthesis.auth.interceptor.withRole
+import org.synthesis.auth.ktor.withRole
 import org.synthesis.calls.contract.CallCommand
 import org.synthesis.calls.request.CallRequestId
 import org.synthesis.calls.request.attachment.CallRequestAttachmentOwner
@@ -38,6 +36,9 @@ import org.synthesis.infrastructure.addFile
 import org.synthesis.infrastructure.ktor.*
 import org.synthesis.institution.InstitutionId
 import org.synthesis.institution.institutionId
+import java.io.ByteArrayOutputStream
+import java.util.*
+import java.util.zip.ZipOutputStream
 
 /**
  * Routes:
@@ -68,7 +69,6 @@ import org.synthesis.institution.institutionId
  *   - Download archive containing all attachments and generated pdf file (with request overview): GET /call-requests/{requestId}/download
  */
 @Suppress("LongMethod")
-@InternalAPI
 fun Route.callRoutes() {
     val callProvider by inject<CallProvider>()
 
@@ -83,12 +83,15 @@ fun Route.callRoutes() {
     val callRequestCommentsHandler by inject<CallRequestCommentsHandler>()
     val callRequestCommentsPresenter by inject<CallRequestCommentsPresenter>()
 
-    route("/calls") {
+    val notFoundMessage = "Request not found"
 
-        /**
-         * Create a new Call.
-         */
-        withRole("call_create") {
+    route("/calls") {
+        authenticate {
+            withRole("call_create") {}
+            /**
+             * Create a new Call.
+             */
+
             post {
                 val createdCallId = callProvider.handle(
                     command = call.receiveValidated<CallCommand.Create>()
@@ -98,12 +101,13 @@ fun Route.callRoutes() {
             }
         }
 
-        route("/{callId}") {
 
-            /**
-             * Update Call.
-             */
-            withRole("call_edit") {
+        route("/{callId}") {
+            authenticate {
+                withRole("call_edit") {}
+                /**
+                 * Update Call.
+                 */
                 post("/update") {
                     val callId = call.callId()
 
@@ -114,30 +118,33 @@ fun Route.callRoutes() {
 
                     call.respondCreated("Call successful Updated", mapOf("id" to callId.uuid))
                 }
+            }
+            authenticate {
+                withRole("call_delete") {}
 
                 /**
                  * Delete Call.
                  */
-                withRole("call_delete") {
-                    post("/delete") {
-                        callProvider.handle(
-                            command = CallCommand.Delete(
-                                id = call.callId()
-                            )
+                post("/delete") {
+                    callProvider.handle(
+                        command = CallCommand.Delete(
+                            id = call.callId()
                         )
+                    )
 
-                        call.respondSuccess()
-                    }
+                    call.respondSuccess()
                 }
             }
         }
     }
 
     route("/call-requests") {
-        /**
-         * Create new request.
-         */
-        withRole("request_create") {
+        authenticate {
+            withRole("request_create") {}
+
+            /**
+             * Create new request.
+             */
             post {
                 val request = call.receiveValidated<CreateCallRequest>()
                 val requestId = CallRequestId.next()
@@ -150,29 +157,40 @@ fun Route.callRoutes() {
                     )
                 )
 
-                call.respondCreated("Call request successful created", CreateCallResponse(requestId.uuid))
+                call.respondCreated(
+                    "Call request successful created",
+                    CreateCallResponse(requestId.uuid)
+                )
             }
         }
 
         route("/{requestId}") {
-            /**
-             * View request.
-             */
-            withRole("request_view") {
+            authenticate {
+                withRole("request_view") {}
+
+                /**
+                 * View request.
+                 */
                 get {
                     val callRequestId = call.callRequestId()
 
                     when (requestTypeAllocator.allocate(callRequestId.uuid)) {
                         CallType.VA -> {
                             val request = vaCallRequestPresenter.find(call.callRequestId())
-                                ?: throw IncorrectRequestParameters.create("requestId", "Request not found")
+                                ?: throw IncorrectRequestParameters.create(
+                                    "requestId",
+                                    notFoundMessage
+                                )
 
                             call.respond(request)
                         }
 
                         CallType.TA -> {
                             val request = taCallRequestPresenter.find(call.callRequestId())
-                                ?: throw IncorrectRequestParameters.create("requestId", "Request not found")
+                                ?: throw IncorrectRequestParameters.create(
+                                    "requestId",
+                                    notFoundMessage
+                                )
 
                             call.respond(request)
                         }
@@ -180,12 +198,25 @@ fun Route.callRoutes() {
                         else -> error("Unknown type")
                     }
                 }
+
+                /**
+                 * Receive information about CallRequest.
+                 *
+                 */
+                get("/coordinator") {
+                    val request = vaCallRequestPresenter.find(call.callRequestId())
+                        ?: throw IncorrectRequestParameters.create("requestId", notFoundMessage)
+
+                    call.respond(request)
+                }
+
             }
 
-            /**
-             * Update request form value.
-             */
-            withRole("request_edit") {
+            authenticate {
+                withRole("request_edit") {}
+                /**
+                 * Update request form value.
+                 */
                 post("/set-field") {
                     val request = call.receiveValidated<SetFieldRequest>()
                     callRequestFlowProxy.handle(
@@ -200,12 +231,12 @@ fun Route.callRoutes() {
                     )
                     call.respondSuccess()
                 }
-            }
 
-            /**
-             * Remove group value from request.
-             */
-            withRole("request_edit") {
+
+                /**
+                 * Remove group value from request.
+                 */
+
                 post("/delete-group") {
                     val request = call.receiveValidated<DeleteGroupRequest>()
 
@@ -221,12 +252,12 @@ fun Route.callRoutes() {
 
                     call.respondSuccess()
                 }
-            }
 
-            /**
-             * Add institution form to request.
-             */
-            withRole("request_edit") {
+
+                /**
+                 * Add institution form to request.
+                 */
+
                 post("/add-institution") {
                     val request = call.receiveValidated<AddInstitutionRequest>()
 
@@ -241,12 +272,12 @@ fun Route.callRoutes() {
 
                     call.respondSuccess()
                 }
-            }
 
-            /**
-             * Remove institution form from request.
-             */
-            withRole("request_edit") {
+
+                /**
+                 * Remove institution form from request.
+                 */
+
                 post("/delete-institution") {
                     val request = call.receiveValidated<DeleteInstitutionRequest>()
 
@@ -261,12 +292,12 @@ fun Route.callRoutes() {
 
                     call.respondSuccess()
                 }
-            }
 
-            /**
-             * Submit request.
-             */
-            withRole("request_edit") {
+
+                /**
+                 * Submit request.
+                 */
+
                 post("/submit") {
 
                     callRequestFlowProxy.handle(
@@ -279,12 +310,12 @@ fun Route.callRoutes() {
 
                     call.respondSuccess()
                 }
-            }
 
-            /**
-             * Remove request.
-             */
-            withRole("request_edit") {
+
+                /**
+                 * Remove request.
+                 */
+
                 post("/delete") {
 
                     callRequestFlowProxy.handle(
@@ -297,12 +328,12 @@ fun Route.callRoutes() {
 
                     call.respondSuccess()
                 }
-            }
 
-            /**
-             * Close request.
-             */
-            withRole("request_edit") {
+
+                /**
+                 * Close request.
+                 */
+
                 post("/close") {
 
                     callRequestFlowProxy.handle(
@@ -316,11 +347,12 @@ fun Route.callRoutes() {
                     call.respondSuccess()
                 }
             }
+            authenticate {
+                withRole("request_withdraw") {}
 
-            /**
-             * Withdraw specified call request
-             */
-            withRole("request_withdraw") {
+                /**
+                 * Withdraw specified call request
+                 */
                 post("/withdraw") {
                     callRequestFlowProxy.handle(
                         CallRequestCommand.WithdrawRequest(
@@ -334,10 +366,12 @@ fun Route.callRoutes() {
                 }
             }
 
-            /**
-             * Approve institution details by coordinator.
-             */
-            withRole("request_approve") {
+            authenticate {
+                withRole("request_approve") {}
+
+                /**
+                 * Approve institution details by coordinator.
+                 */
                 post("/coordinator/approve") {
                     callRequestFlowProxy.handle(
                         CallRequestCommand.ApproveRequest(
@@ -349,12 +383,11 @@ fun Route.callRoutes() {
 
                     call.respondSuccess()
                 }
-            }
 
-            /**
-             * Cancel confirmation of the correctness of the entered data for the institute.
-             */
-            withRole("request_approve") {
+
+                /**
+                 * Cancel confirmation of the correctness of the entered data for the institute.
+                 */
                 post("/coordinator/undo-approve") {
                     callRequestFlowProxy.handle(
                         CallRequestCommand.UndoRequestApprove(
@@ -368,7 +401,9 @@ fun Route.callRoutes() {
                 }
             }
 
-            withRole("request_score") {
+            authenticate {
+                withRole("request_score") {}
+
                 post("/scorer/create") {
                     val id = callRequestFlowProxy.handle(
                         CallRequestCommand.CreateScore(
@@ -380,9 +415,7 @@ fun Route.callRoutes() {
 
                     call.respondSuccess(mapOf("id" to id))
                 }
-            }
 
-            withRole("request_score") {
                 post("/scorer/{scoreFormId}/score") {
                     val request = call.receiveValidated<SetFieldScore>()
 
@@ -398,9 +431,9 @@ fun Route.callRoutes() {
 
                     call.respondSuccess()
                 }
-            }
 
-            withRole("request_score") {
+
+
                 post("/scorer/{scoreFormId}/delete") {
                     callRequestFlowProxy.handle(
                         CallRequestCommand.DeleteScore(
@@ -415,7 +448,9 @@ fun Route.callRoutes() {
                 }
             }
 
-            withRole("request_scores_view") {
+            authenticate {
+                withRole("request_score") {}
+
                 get("/scorer/{scoreFormId}") {
                     val score = scorePresenter.find(call.scoreFormId())
                         ?: throw IncorrectRequestParameters.create("scoreFormId", "Score not found")
@@ -424,39 +459,32 @@ fun Route.callRoutes() {
                 }
             }
 
-            /**
-             * Receive information about CallRequest.
-             *
-             * @todo: remove me
-             */
-            withRole("request_view") {
-                get("/coordinator") {
-                    val request = vaCallRequestPresenter.find(call.callRequestId())
-                        ?: throw IncorrectRequestParameters.create("requestId", "Request not found")
-
-                    call.respond(request)
-                }
-            }
 
             route("/attachments/{institutionId}") {
-                /**
-                 * List of attachments on request for a specific institution form.
-                 */
-                withRole("request_attachment_view") {
+
+                authenticate {
+                    withRole("request_attachment_view") {}
+
+                    /**
+                     * List of attachments on request for a specific institution form.
+                     */
                     get {
                         call.respondCollection(
-                            vaCallRequestAttachmentPresenter.list(call.callRequestId(), call.institutionId())
+                            vaCallRequestAttachmentPresenter.list(
+                                call.callRequestId(),
+                                call.institutionId()
+                            )
                         )
                     }
                 }
 
-                /**
-                 * Add attachment(s) to request for a specific institution.
-                 * It is possible to add several attachments at once, but by agreement, one file is now added per request.
-                 */
-                withRole("request_attachment_add") {
+                authenticate {
+                    withRole("request_attachment_add") {}
+                    /**
+                     * Add attachment(s) to request for a specific institution.
+                     * It is possible to add several attachments at once, but by agreement, one file is now added per request.
+                     */
                     post {
-
                         val currentUser = authenticatedUser()
                         val callRequestId = call.callRequestId()
                         val institutionId = call.institutionId()
@@ -486,10 +514,11 @@ fun Route.callRoutes() {
             }
 
             route("/attachments/{attachmentId}") {
-                /**
-                 * Download attachment.
-                 */
-                withRole("request_attachment_view") {
+                authenticate {
+                    withRole("request_attachment_view") {}
+                    /**
+                     * Download attachment.
+                     */
                     get("/download") {
                         val attachment = vaCallRequestAttachmentPresenter
                             .download(call.callRequestAttachmentId())
@@ -504,12 +533,16 @@ fun Route.callRoutes() {
                     }
                 }
 
-                /**
-                 * Delete the specified attachment.
-                 */
-                withRole("request_attachment_remove") {
+                authenticate {
+                    withRole("request_attachment_remove") {}
+                    /**
+                     * Delete the specified attachment.
+                     */
                     post("/remove") {
-                        vaCallRequestAttachmentStore.remove(call.callRequestId(), call.callRequestAttachmentId())
+                        vaCallRequestAttachmentStore.remove(
+                            call.callRequestId(),
+                            call.callRequestAttachmentId()
+                        )
 
                         call.respondSuccess()
                     }
@@ -517,10 +550,12 @@ fun Route.callRoutes() {
             }
 
             route("/comments") {
-                /**
-                 * Add a new comment to thread, or reply to a comment.
-                 */
-                withRole("request_comments_add") {
+                authenticate {
+                    withRole("request_comments_add") {}
+
+                    /**
+                     * Add a new comment to thread, or reply to a comment.
+                     */
                     post {
                         val request = call.receiveValidated<AddCommentRequest>()
 
@@ -536,21 +571,24 @@ fun Route.callRoutes() {
                     }
                 }
 
-                /**
-                 * Receive all comments for the specified application.
-                 */
-                withRole("request_comments_view") {
+                authenticate {
+                    withRole("request_comments_view") {}
+                    /**
+                     * Receive all comments for the specified application.
+                     */
+
                     get {
                         call.respondSuccess(
                             callRequestCommentsPresenter.find(call.callRequestId())
                         )
                     }
                 }
+                authenticate {
+                    withRole("request_comments_download") {}
 
-                /**
-                 * Receive all comments for the specified application (as PDF file).
-                 */
-                withRole("request_comments_download") {
+                    /**
+                     * Receive all comments for the specified application (as PDF file).
+                     */
                     get("/download") {
                         val callRequestId = call.callRequestId()
 
@@ -572,11 +610,12 @@ fun Route.callRoutes() {
                     }
                 }
             }
+            authenticate {
+                withRole("request_export") {}
 
-            /**
-             * Export request details to PDF.
-             */
-            withRole("request_export") {
+                /**
+                 * Export request details to PDF.
+                 */
                 get("/export") {
                     val callRequestId = call.callRequestId()
 
@@ -592,10 +631,11 @@ fun Route.callRoutes() {
                     }
                 }
             }
-            /**
-             * Download archive containing all attachments and generated pdf file (with request overview).
-             */
-            withRole("request_download") {
+            authenticate {
+                withRole("request_download") {}
+                /**
+                 * Download archive containing all attachments and generated pdf file (with request overview).
+                 */
                 get("/download") {
                     val callRequestId = call.callRequestId()
 
@@ -610,7 +650,10 @@ fun Route.callRoutes() {
                             vaCallRequestAttachmentPresenter.list(callRequestId)
                                 .mapNotNull { vaCallRequestAttachmentPresenter.download(it.id) }
                                 .forEach { attachment ->
-                                    stream.addFile(attachment.fileNameWithExtension(), addedAttachments) {
+                                    stream.addFile(
+                                        attachment.fileNameWithExtension(),
+                                        addedAttachments
+                                    ) {
                                         stream.write(attachment.payload.moveToByteArray())
                                     }
                                 }
@@ -636,6 +679,7 @@ fun Route.callRoutes() {
         }
     }
 }
+
 
 private fun createInstitutionId(value: String?) = if (!value.isNullOrEmpty()) {
     InstitutionId.fromString(value)

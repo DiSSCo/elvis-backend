@@ -28,7 +28,7 @@ class SelectQuery(
     fun orWhere(code: CriteriaBuilder.() -> Unit) = orWhereCriteria.apply(code)
 
     infix fun String.orderBy(direction: String) {
-        orderBy = Pair(this, direction.toUpperCase())
+        orderBy = Pair(this, direction.uppercase())
     }
 
     infix fun String.innerJoin(withExpression: String) = joins.add("INNER JOIN $this ON $withExpression")
@@ -53,7 +53,7 @@ class SelectQuery(
         }
 
         if (currentOrder != null) {
-            sql += " ORDER BY ${currentOrder.first} ${currentOrder.second.toUpperCase()}"
+            sql += " ORDER BY ${currentOrder.first} ${currentOrder.second.uppercase()}"
         }
 
         if (limit != null) sql += " LIMIT $limit"

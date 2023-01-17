@@ -48,7 +48,7 @@ class VaCallRequestFinder(
                 institutionId = InstitutionId(GRID(it.getString("institution_id"))),
                 coordinatorId = UserAccountId(it.getUUID("coordinator_id")),
                 form = serializer.unserialize(it.getString("form"), DynamicForm::class.java),
-                status = VaCallRequest.Status.valueOf(it.getString("status").toUpperCase()),
+                status = VaCallRequest.Status.valueOf(it.getString("status").uppercase()),
                 deletedAt = it.getLocalDateTime("deleted_at"),
                 id = it.getUUID("id")
             )
@@ -66,7 +66,7 @@ class VaCallRequestFinder(
             general = serializer.unserialize(getString("form"), DynamicForm::class.java),
             institutions = institutions.associateBy { it.institutionId() }.toMutableMap()
         ),
-        status = VaCallRequest.Status.valueOf(getString("status").toUpperCase()),
+        status = VaCallRequest.Status.valueOf(getString("status").uppercase()),
         deletedAt = getLocalDateTime("deleted_at"),
         resourceId = getUUID("resource_id")?.let { KeycloakResourceId(it) }
     )

@@ -15,6 +15,7 @@ class TaCallRequestStore(
     private val sqlClient: PgPool,
     private val serializer: Serializer = JacksonSerializer
 ) : CallRequestStore<TaCallRequest> {
+    private val transnationalAccess = "Transnational Access"
     override suspend fun add(request: TaCallRequest) {
         sqlClient.execute(
             insert(
@@ -25,11 +26,11 @@ class TaCallRequestStore(
                     "form" to serializer.serialize(DynamicForm(request.content().general.values)),
                     "created_at" to request.createdAt(),
                     "requester_id" to request.authorId().uuid,
-                    "status" to request.status().name.toLowerCase(),
+                    "status" to request.status().name.lowercase(),
                     "title" to request.title(),
                     "deleted_at" to request.deletedAt(),
                     "resource_id" to request.resourceId()?.id,
-                    "type" to "Transnational Access"
+                    "type" to transnationalAccess
                 )
             )
         )
@@ -42,7 +43,7 @@ class TaCallRequestStore(
                     on = "requests",
                     rows = mapOf(
                         "form" to serializer.serialize(DynamicForm(request.content().general.values)),
-                        "status" to request.status().name.toLowerCase(),
+                        "status" to request.status().name.lowercase(),
                         "title" to request.title(),
                         "country_code" to request.country()?.isoCode?.id,
                         "deleted_at" to request.deletedAt()
@@ -92,9 +93,9 @@ class TaCallRequestStore(
                             "coordinator_id" to institutionForm.coordinatorId().uuid,
                             "created_at" to LocalDateTime.now(),
                             "form" to serializedInstituteForm,
-                            "status" to institutionForm.status().name.toLowerCase(),
+                            "status" to institutionForm.status().name.lowercase(),
                             "deleted_at" to institutionForm.deletedAt(),
-                            "type" to "Transnational Access"
+                            "type" to transnationalAccess
                         )
                     ) {
                         onConflict(
@@ -102,7 +103,7 @@ class TaCallRequestStore(
                             action = OnConflict.DoUpdate(
                                 rows = mapOf(
                                     "form" to serializedInstituteForm,
-                                    "status" to institutionForm.status().name.toLowerCase(),
+                                    "status" to institutionForm.status().name.lowercase(),
                                     "deleted_at" to institutionForm.deletedAt()
                                 )
                             )
@@ -125,7 +126,7 @@ class TaCallRequestStore(
                 ) {
                     where {
                         "institution_id" eq institutionId.grid.value
-                        "type" eq "Transnational Access"
+                        "type" eq transnationalAccess
                     }
                 }
             )

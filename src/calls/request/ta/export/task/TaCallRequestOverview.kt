@@ -96,7 +96,7 @@ class TaCallRequestOverview(
         }.joinToString("\r\n")
     }
 
-    private fun getService(form: DynamicForm, facilities: List<Facility?>): String? {
+    private fun getService(form: DynamicForm, facilities: List<Facility?>): String {
         return form.values.filter { it.value.field.id == "service" }.map {
             val facility = facilities[it.key.groupId?.position!!]
             val days = it.value.clearValue().toString()

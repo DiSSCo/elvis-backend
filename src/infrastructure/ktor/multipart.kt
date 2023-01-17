@@ -1,9 +1,9 @@
 package org.synthesis.infrastructure.ktor
 
-import io.ktor.application.*
+import io.ktor.server.application.*
 import io.ktor.http.*
 import io.ktor.http.content.*
-import io.ktor.request.*
+import io.ktor.server.request.*
 import io.ktor.utils.io.*
 import java.io.File
 

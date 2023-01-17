@@ -60,7 +60,7 @@ class PostgresInstitutionStore(
                     "id" to institution.id().grid.value,
                     "cetaf" to institution.cetaf().value,
                     "title" to institution.title(),
-                    "country_code" to institution.prepareCountry()?.isoCode?.id?.toUpperCase(),
+                    "country_code" to institution.prepareCountry()?.isoCode?.id?.uppercase(),
                     "data" to serializer.serialize(institution.content())
                 )
             )
@@ -74,7 +74,7 @@ class PostgresInstitutionStore(
                     "data" to serializer.serialize(institution.content()),
                     "title" to institution.title(),
                     "cetaf" to institution.cetaf().value,
-                    "country_code" to institution.prepareCountry()?.isoCode?.id?.toUpperCase(),
+                    "country_code" to institution.prepareCountry()?.isoCode?.id?.uppercase(),
                 )
             ) {
                 where { "id" eq institution.id().grid.value }
@@ -97,6 +97,6 @@ class PostgresInstitutionStore(
         name = getString("title"),
         cetaf = CETAF(getString("cetaf")),
         form = serializer.unserialize(getString("data"), DynamicForm::class.java),
-        countryCode = getString("country_code")?.let { CountryCode(it.toUpperCase()) }
+        countryCode = getString("country_code")?.let { CountryCode(it.uppercase()) }
     )
 }

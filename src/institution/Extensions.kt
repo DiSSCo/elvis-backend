@@ -1,6 +1,6 @@
 package org.synthesis.institution
 
-import io.ktor.application.ApplicationCall
+import io.ktor.server.application.ApplicationCall
 import java.util.*
 import org.synthesis.infrastructure.IncorrectRequestParameters
 import org.synthesis.infrastructure.ktor.receiveFromParameters
@@ -56,7 +56,7 @@ fun ApplicationCall.imageId(): UUID = try {
  * @throws [IncorrectRequestParameters]
  */
 fun ApplicationCall.coordinatorType(): CoordinatorType = try {
-    CoordinatorType.valueOf(receiveFromParameters("coordinatorType").toUpperCase())
+    CoordinatorType.valueOf(receiveFromParameters("coordinatorType").uppercase())
 } catch (e: Exception) {
     throw IncorrectRequestParameters.create(
         field = "imageId",

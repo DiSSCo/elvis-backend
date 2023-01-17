@@ -13,13 +13,13 @@ class CountryManager(
     private val userAccountProvider: UserAccountProvider
 ) {
 
-    suspend fun taScorers(inCountry: CountryCode): Flow<UserAccount> = userAccountFinder
+    fun taScorers(inCountry: CountryCode): Flow<UserAccount> = userAccountFinder
         .findWithCriteria {
             "group_list" inArray listOf("ta scorer")
             "country_code" eq inCountry.id
         }
 
-    suspend fun tafAdmins(inCountry: CountryCode): Flow<UserAccount> = userAccountFinder
+    fun tafAdmins(inCountry: CountryCode): Flow<UserAccount> = userAccountFinder
         .findWithCriteria {
             "group_list" inArray listOf("taf admin")
             "country_code" eq inCountry.id

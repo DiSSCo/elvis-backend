@@ -13,7 +13,7 @@ class InstitutionMembersProvider(
     private val userAccountFinder: UserAccountFinder,
     private val userAccountProvider: UserAccountProvider
 ) {
-    suspend fun list(forInstitutionId: InstitutionId): Flow<UserAccount> =
+    fun list(forInstitutionId: InstitutionId): Flow<UserAccount> =
         userAccountFinder.findWithCriteria {
             "related_institution_id" eq forInstitutionId.grid.value
         }
