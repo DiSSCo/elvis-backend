@@ -3,8 +3,10 @@ package org.synthesis.keycloak
 data class KeycloakConfiguration(
     val activeRealm: KeycloakRealm,
     val serverUrl: String,
+    val credentials: KeycloakCredentials,
     val apiClientInfo: KeycloakApiClient,
-    val uiClientInfo: KeycloakApiClient
+    val uiClientInfo: KeycloakApiClient,
+    val adminClientInfo: KeycloakApiClient,
 ) {
     companion object {
         fun KeycloakConfiguration.realmUrl() = "$serverUrl/realms/${activeRealm.value}"
@@ -21,4 +23,9 @@ data class KeycloakRealm(
 data class KeycloakApiClient(
     val id: String,
     val secret: String?
+)
+
+data class KeycloakCredentials(
+    val username: String,
+    val password: String
 )
